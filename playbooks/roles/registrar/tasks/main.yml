@@ -22,15 +22,14 @@
 #
 
 # write the supervisor script
-- name: "writing {{ item }} supervisor script"
+- name: "writing registrar supervisor script"
   template:
-    src: "edx/app/supervisor/conf.d.available/{{ item }}.conf.j2"
-    dest: "{{ supervisor_available_dir }}/{{ item }}.conf"
+    src: "edx/app/supervisor/conf.d.available/registrar.conf.j2"
+    dest: "{{ supervisor_available_dir }}/registrar.conf"
     owner: "{{ supervisor_user }}"
     group: "{{ supervisor_user }}"
     mode: 0644
   become_user: "{{ supervisor_user }}"
-  with_items: "{{ service_variants_enabled }}"
   tags:
     - install
     - install:configuration
