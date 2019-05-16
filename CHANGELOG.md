@@ -758,8 +758,8 @@
   - Injected all above settings as environment variables for Registrar.
 
 - Role: registrar
-  - Added `workers.conf.j2`
-  - Add task to generate `workers.conf` from `workers.conf.j2`
+  - Added `registrar-workers.conf.j2`
+  - Add task to generate `registrar-workers.conf` from `registrar-workers.conf.j2`
 
 - Role: supervisor
   - Add registrar to `pre_supervisor_checks.py`

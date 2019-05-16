@@ -235,7 +235,7 @@ if __name__ == '__main__':
                     "ecommerce": {'python': args.ecommerce_python, 'env_file': args.ecommerce_env, 'code_dir': args.ecommerce_code_dir},
                     "credentials": {'python': args.credentials_python, 'env_file': args.credentials_env, 'code_dir': args.credentials_code_dir},
                     "discovery": {'python': args.discovery_python, 'env_file': args.discovery_env, 'code_dir': args.discovery_code_dir},
-                    "journals": {'python': args.journals_python, 'env_file': args.journals_env, 'code_dir': args.journals_code_dir},
+                    "journals": {'python': args.journals_python, 'env_file': args.journals_env, 'code_dir': args.journals_code_dir},                    
                     "registrar": {'python': args.registrar_python, 'env_file': args.registrar_env, 'code_dir': args.registrar_code_dir},
                     "insights": {'python': args.insights_python, 'env_file': args.insights_env, 'code_dir': args.insights_code_dir},
                     "analytics_api": {'python': args.analytics_api_python, 'env_file': args.analytics_api_env, 'code_dir': args.analytics_api_code_dir},

@@ -125,4 +125,14 @@ REGISTRAR_ENABLE_NEWRELIC_DISTRIBUTED_TRACING: false
 # Remote config
 REGISTRAR_HERMES_ENABLED: "{{ COMMON_HERMES_ENABLED }}"
 
+REGISTRAR_WORKER_DEFAULT_STOPWAITSECS: 432000
+
+REGISTRAR_CELERY_WORKERS:
+  - queue: registrar
+    service_variant: registrar
+    concurrency: 1
+    monitor: True
+
+registrar_workers: "{{ REGISTRAR_CELERY_WORKERS }}"
+
 registrar_post_migrate_commands: []
