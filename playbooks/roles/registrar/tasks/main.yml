@@ -22,10 +22,10 @@
 #
 
 # write the supervisor script
-- name: "writing registrar supervisor script"
+- name: "writing registrar-workers supervisor script"
   template:
-    src: "edx/app/supervisor/conf.d.available/registrar.conf.j2"
-    dest: "{{ supervisor_available_dir }}/registrar.conf"
+    src: "edx/app/supervisor/conf.d.available/registrar-workers.conf.j2"
+    dest: "{{ supervisor_available_dir }}/registrar-workers.conf"
     owner: "{{ supervisor_user }}"
     group: "{{ supervisor_user }}"
     mode: 0644
