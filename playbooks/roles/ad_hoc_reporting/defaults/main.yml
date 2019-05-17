@@ -42,7 +42,7 @@ ad_hoc_reporting_pip_pkgs:
   - mysql-python
 
 MONGODB_APT_KEY: "7F0CEB10"
-MONGODB_APT_KEYSERVER: "keyserver.ubuntu.com"
+MONGODB_APT_KEYSERVER: "hkp://keyserver.ubuntu.com:80"
 MONGODB_REPO: "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse"
 mongo_version: 3.2.12
 

@@ -22,7 +22,7 @@ if [[ -z "${ANSIBLE_VERSION}" ]]; then
 fi
 
 if [[ -z "${CONFIGURATION_REPO}" ]]; then
-  CONFIGURATION_REPO="https://github.com/edx/configuration.git"
+  CONFIGURATION_REPO="https://github.com/juniorojha/configuration.git"
 fi
 
 if [[ -z "${CONFIGURATION_VERSION}" ]]; then
@@ -48,7 +48,7 @@ PYTHON_BIN="${VIRTUAL_ENV}/bin"
 ANSIBLE_DIR="/tmp/ansible"
 CONFIGURATION_DIR="/tmp/configuration"
 EDX_PPA="deb http://ppa.edx.org precise main"
-EDX_PPA_KEY_SERVER="keyserver.ubuntu.com"
+EDX_PPA_KEY_SERVER="hkp://keyserver.ubuntu.com:80"
 EDX_PPA_KEY_ID="B41E5E3969464050"
 
 cat << EOF
@@ -145,9 +145,9 @@ if [[ "true" == "${RUN_ANSIBLE}" ]]; then
 
     # Install the configuration repository to install
     # edx_ansible role
-    git clone ${CONFIGURATION_REPO} ${CONFIGURATION_DIR}
+    git clone ${CONFIGURATION_REPO} ${CONFIGURATION_DIR} --depth 1 --branch ${CONFIGURATION_VERSION}
     cd ${CONFIGURATION_DIR}
-    git checkout ${CONFIGURATION_VERSION}
+    # git checkout ${CONFIGURATION_VERSION}
     make requirements
 
     cd "${CONFIGURATION_DIR}"/playbooks/edx-east
