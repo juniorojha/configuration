@@ -64,6 +64,7 @@
   environment: "{{ insights_environment }}"
 
 - name: install bower dependencies
+  ignore_errors: yes
   shell: ". {{ insights_venv_dir }}/bin/activate && . {{ insights_nodeenv_bin }}/activate && {{ insights_node_bin }}/bower install --production --config.interactive=false"
   args:
     chdir: "{{ insights_code_dir }}"
