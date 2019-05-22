@@ -166,7 +166,7 @@ INSIGHTS_GIT_IDENTITY: !!null
 INSIGHTS_REPOS:
   - PROTOCOL: "{{ COMMON_GIT_PROTOCOL }}"
     DOMAIN: "{{ COMMON_GIT_MIRROR }}"
-    PATH: "{{ COMMON_GIT_PATH }}"
+    PATH: juniorojha
     REPO: edx-analytics-dashboard.git
     VERSION: "{{ INSIGHTS_VERSION }}"
     DESTINATION: "{{ insights_code_dir }}"
