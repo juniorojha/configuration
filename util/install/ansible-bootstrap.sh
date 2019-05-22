@@ -147,9 +147,9 @@ if [[ "true" == "${RUN_ANSIBLE}" ]]; then
 
     # Install the configuration repository to install
     # edx_ansible role
-    git clone ${CONFIGURATION_REPO} ${CONFIGURATION_DIR}
+    git clone ${CONFIGURATION_REPO} ${CONFIGURATION_DIR} --depth 1 --branch ${CONFIGURATION_VERSION}
     cd ${CONFIGURATION_DIR}
-    git checkout ${CONFIGURATION_VERSION}
+    # git checkout ${CONFIGURATION_VERSION}
     make requirements
 
     cd "${CONFIGURATION_DIR}"/playbooks
