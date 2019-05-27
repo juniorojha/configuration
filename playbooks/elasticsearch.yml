@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: elasticsearch
   become: True
   vars:
     # By default take instances in and out of the elb(s) they
