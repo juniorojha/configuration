@@ -1,5 +1,5 @@
 - name: Deploy MySQL
-  hosts: all
+  hosts: mysql
   become: True
   gather_facts: True
   roles:
