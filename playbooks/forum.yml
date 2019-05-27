@@ -1,5 +1,5 @@
 - name: Deploy forum
-  hosts: all
+  hosts: forum
   become: True
   gather_facts: True
   vars:
