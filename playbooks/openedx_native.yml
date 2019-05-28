@@ -3,7 +3,7 @@
 # Open edX Native installation for single server community installs.
 
 - name: Bootstrap instance(s)
-  hosts: all
+  hosts: oracle
   gather_facts: no
   become: True
   roles:
