@@ -161,7 +161,8 @@ sudo -H pip install -r requirements.txt
 ##
 ## Run the openedx_native.yml playbook in the configuration/playbooks directory
 ##
-cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -v ./openedx_native.yml -i inventory.ini $EXTRA_VARS "$@"
+
+cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -vvv ./openedx_native.yml -i inventory.ini --ask-sudo-pass $EXTRA_VARS "$@"
 ansible_status=$?
 
 if [[ $ansible_status -ne 0 ]]; then

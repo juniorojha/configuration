@@ -2,6 +2,10 @@
 # when the role is included
 ---
 
+mysql_host = 10.129.103.136
+elasticsearch_host = 10.129.103.136
+mongo_host = 10.129.103.136
+
 # These are variables that default to a localhost
 # setup and are meant to be overwritten for
 # different environments.
@@ -68,7 +72,7 @@ EDXAPP_XQUEUE_DJANGO_AUTH:
 EDXAPP_XQUEUE_URL: 'http://localhost:18040'
 
 # Comma-separated list of hosts/ips
-EDXAPP_MONGO_HOSTS: 'localhost'
+EDXAPP_MONGO_HOSTS: "{{ mongo_host }}"
 EDXAPP_MONGO_PASSWORD: 'password'
 EDXAPP_MONGO_PORT: 27017
 EDXAPP_MONGO_USER: 'edxapp'
@@ -108,10 +112,10 @@ EDXAPP_MYSQL_CSMH_OPTIONS: "{{ EDXAPP_MYSQL_OPTIONS }}"
 # This is Django's default https://docs.djangoproject.com/en/1.8/ref/settings/#conn-max-age
 EDXAPP_MYSQL_CONN_MAX_AGE: 0
 
-EDXAPP_MYSQL_HOST: 'localhost'
+EDXAPP_MYSQL_HOST: "{{ mysql_host }}"
 EDXAPP_MYSQL_PORT: '3306'
 
-EDXAPP_SEARCH_HOST: 'localhost'
+EDXAPP_SEARCH_HOST: "{{ elasticsearch_host }}"
 EDXAPP_SEARCH_PORT: 9200
 EDXAPP_SEARCH_USE_SSL: false
 
@@ -140,7 +144,7 @@ EDXAPP_AWS_SES_REGION_ENDPOINT: "email.us-east-1.amazonaws.com"
 
 EDXAPP_LOG_LEVEL: 'INFO'
 
-EDXAPP_MEMCACHE: [ 'localhost:11211' ]
+EDXAPP_MEMCACHE: [ '10.129.103.136:11211' ]
 EDXAPP_CACHE_COURSE_STRUCTURE_MEMCACHE: "{{ EDXAPP_MEMCACHE }}"
 EDXAPP_CACHE_BACKEND: 'django.core.cache.backends.memcached.MemcachedCache'
 EDXAPP_COMMENTS_SERVICE_URL:  'http://localhost:18080'
