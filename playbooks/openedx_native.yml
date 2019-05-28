@@ -33,62 +33,63 @@
     SANDBOX_ENABLE_RABBITMQ: true
     JOURNALS_ENABLED: false
   roles:
-    - role: swapfile
-      SWAPFILE_SIZE: 4GB
-    - role: aws
-      when: COMMON_ENABLE_AWS_ROLE
-    - role: nginx
-      nginx_sites:
-      - certs
-      - cms
-      - lms
-      - forum
-      - xqueue
-      nginx_default_sites:
-      - lms
-    - role: edxlocal
-      when: EDXAPP_MYSQL_HOST == 'localhost'
-    - role: memcache
-      when: "'localhost' in ' '.join(EDXAPP_MEMCACHE)"
-    - role: mongo_3_2
-      when: "'localhost' in EDXAPP_MONGO_HOSTS"
-    - role: rabbitmq
-      rabbitmq_ip: 127.0.0.1
-      when: SANDBOX_ENABLE_RABBITMQ
-    - role: edxapp
-      celery_worker: True
-    - edxapp
-    - role: ecommerce
-      when: SANDBOX_ENABLE_ECOMMERCE
-    - role: ecomworker
-      ECOMMERCE_WORKER_BROKER_HOST: 127.0.0.1
-      when: SANDBOX_ENABLE_ECOMMERCE
-    - role: analytics_api
-      when: SANDBOX_ENABLE_ANALYTICS_API
-    - role: insights
-      when: SANDBOX_ENABLE_INSIGHTS
-    # not ready yet: - edx_notes_api
-    - demo
-    - oauth_client_setup
-    - oraclejdk
-    - role: elasticsearch
-      when: "'localhost' in EDXAPP_ELASTIC_SEARCH_CONFIG|map(attribute='host')"
-    - forum
-    - role: discovery
-      when: SANDBOX_ENABLE_DISCOVERY
-    - role: journals
-      when: JOURNALS_ENABLED
-    - role: notifier
-      NOTIFIER_DIGEST_TASK_INTERVAL: 5
-    - role: xqueue
-      update_users: True
-    - certs
-    - edx_ansible
-    - role: datadog
-      when: COMMON_ENABLE_DATADOG
-    - role: splunkforwarder
-      when: COMMON_ENABLE_SPLUNKFORWARDER
-    - role: postfix_queue
-      when: POSTFIX_QUEUE_EXTERNAL_SMTP_HOST != ''
-    - role: datadog-uninstall
-      when: not COMMON_ENABLE_DATADOG
+    - elasticsearch
+    # - role: swapfile
+    #   SWAPFILE_SIZE: 4GB
+    # - role: aws
+    #   when: COMMON_ENABLE_AWS_ROLE
+    # - role: nginx
+    #   nginx_sites:
+    #   - certs
+    #   - cms
+    #   - lms
+    #   - forum
+    #   - xqueue
+    #   nginx_default_sites:
+    #   - lms
+    # - role: edxlocal
+    #   when: EDXAPP_MYSQL_HOST == 'localhost'
+    # - role: memcache
+    #   when: "'localhost' in ' '.join(EDXAPP_MEMCACHE)"
+    # - role: mongo_3_2
+    #   when: "'localhost' in EDXAPP_MONGO_HOSTS"
+    # - role: rabbitmq
+    #   rabbitmq_ip: 127.0.0.1
+    #   when: SANDBOX_ENABLE_RABBITMQ
+    # - role: edxapp
+    #   celery_worker: True
+    # - edxapp
+    # - role: ecommerce
+    #   when: SANDBOX_ENABLE_ECOMMERCE
+    # - role: ecomworker
+    #   ECOMMERCE_WORKER_BROKER_HOST: 127.0.0.1
+    #   when: SANDBOX_ENABLE_ECOMMERCE
+    # - role: analytics_api
+    #   when: SANDBOX_ENABLE_ANALYTICS_API
+    # - role: insights
+    #   when: SANDBOX_ENABLE_INSIGHTS
+    # # not ready yet: - edx_notes_api
+    # - demo
+    # - oauth_client_setup
+    # - oraclejdk
+    # - role: elasticsearch
+    #   when: "'localhost' in EDXAPP_ELASTIC_SEARCH_CONFIG|map(attribute='host')"
+    # - forum
+    # - role: discovery
+    #   when: SANDBOX_ENABLE_DISCOVERY
+    # - role: journals
+    #   when: JOURNALS_ENABLED
+    # - role: notifier
+    #   NOTIFIER_DIGEST_TASK_INTERVAL: 5
+    # - role: xqueue
+    #   update_users: True
+    # - certs
+    # - edx_ansible
+    # - role: datadog
+    #   when: COMMON_ENABLE_DATADOG
+    # - role: splunkforwarder
+    #   when: COMMON_ENABLE_SPLUNKFORWARDER
+    # - role: postfix_queue
+    #   when: POSTFIX_QUEUE_EXTERNAL_SMTP_HOST != ''
+    # - role: datadog-uninstall
+    #   when: not COMMON_ENABLE_DATADOG
