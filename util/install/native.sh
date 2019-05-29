@@ -162,7 +162,9 @@ sudo -H pip install -r requirements.txt
 ## Run the openedx_native.yml playbook in the configuration/playbooks directory
 ##
 
-cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -vvv ./openedx_native.yml -i inventory.ini --ask-sudo-pass $EXTRA_VARS "$@"
+cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -vvv ./openedx_native.yml -i inventory.ini --ask-sudo-pass -e"@roles/edxapp/defaults/main.yml" -e"@roles/forum/defaults/main.yml" -e"@roles/xqueue/defaults/main.yml" -e"@roles/certs/defaults/main.yml" -e"@roles/analytics_api/defaults/main.yml" $EXTRA_VARS "$@"
+
+#cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -vvv ./openedx_native.yml -i inventory.ini --ask-sudo-pass $EXTRA_VARS "$@"
 ansible_status=$?
 
 if [[ $ansible_status -ne 0 ]]; then
