@@ -21,55 +21,66 @@ edxlocal_database_users:
   - {
       db: "{{ ECOMMERCE_DATABASE_NAME | default(None) }}",
       user: "{{ ECOMMERCE_DATABASE_USER | default(None) }}",
-      pass: "{{ ECOMMERCE_DATABASE_PASSWORD | default(None) }}"
+      pass: "{{ ECOMMERCE_DATABASE_PASSWORD | default(None) }}",
+      host: "{{ ecommerce_host }}"
     }
   - {
       db: "{{ INSIGHTS_DATABASE_NAME | default(None) }}",
       user: "{{ INSIGHTS_DATABASE_USER | default(None) }}",
-      pass: "{{ INSIGHTS_DATABASE_PASSWORD | default(None) }}"
+      pass: "{{ INSIGHTS_DATABASE_PASSWORD | default(None) }}",
+      host: "{{ insights_host }}"
     }
   - {
       db: "{{ XQUEUE_MYSQL_DB_NAME | default(None) }}",
       user: "{{ XQUEUE_MYSQL_USER | default(None) }}",
-      pass: "{{ XQUEUE_MYSQL_PASSWORD | default(None) }}"
+      pass: "{{ XQUEUE_MYSQL_PASSWORD | default(None) }}",
+      host: "{{ xqueue_host }}"
     }
   - {
       db: "{{ EDXAPP_MYSQL_DB_NAME | default(None) }}",
       user: "{{ EDXAPP_MYSQL_USER | default(None) }}",
-      pass: "{{ EDXAPP_MYSQL_PASSWORD | default(None) }}"
+      pass: "{{ EDXAPP_MYSQL_PASSWORD | default(None) }}",
+      host: "{{ edxapp_host }}"
     }
   - {
       db: "{{ EDXAPP_MYSQL_CSMH_DB_NAME | default(None) }}",
       user: "{{ EDXAPP_MYSQL_CSMH_USER | default(None) }}",
-      pass: "{{ EDXAPP_MYSQL_CSMH_PASSWORD | default(None) }}"
+      pass: "{{ EDXAPP_MYSQL_CSMH_PASSWORD | default(None) }}",
+      host: "{{ edxapp_csmh_host }}"
     }
   - {
       db: "{{ ANALYTICS_PIPELINE_OUTPUT_DATABASE_NAME | default(None) }}",
       user: "{{ ANALYTICS_PIPELINE_OUTPUT_DATABASE_USER | default(None) }}",
-      pass: "{{ ANALYTICS_PIPELINE_OUTPUT_DATABASE_PASSWORD | default(None) }}"
+      pass: "{{ ANALYTICS_PIPELINE_OUTPUT_DATABASE_PASSWORD | default(None) }}",
+      host: "{{ analytics_host }}"
     }
   - {
       db: "{{ HIVE_METASTORE_DATABASE_NAME | default(None) }}",
       user: "{{ HIVE_METASTORE_DATABASE_USER | default(None) }}",
-      pass: "{{ HIVE_METASTORE_DATABASE_PASSWORD | default(None) }}"
+      pass: "{{ HIVE_METASTORE_DATABASE_PASSWORD | default(None) }}",
+      host: "{{ hive_host }}"
     }
   - {
       db: "{{ CREDENTIALS_DEFAULT_DB_NAME | default(None) }}",
       user: "{{ CREDENTIALS_MYSQL_USER | default(None) }}",
-      pass: "{{ CREDENTIALS_MYSQL_PASSWORD | default(None) }}"
+      pass: "{{ CREDENTIALS_MYSQL_PASSWORD | default(None) }}",
+      host: "{{ credentials_host }}"
     }
   - {
       db: "{{ DISCOVERY_DEFAULT_DB_NAME | default(None) }}",
       user: "{{ DISCOVERY_MYSQL_USER | default(None) }}",
-      pass: "{{ DISCOVERY_MYSQL_PASSWORD | default(None) }}"
+      pass: "{{ DISCOVERY_MYSQL_PASSWORD | default(None) }}",
+      host: "{{ discovery_host }}"
     }
   - {
       db: "{{ JOURNALS_DEFAULT_DB_NAME | default(None) }}",
       user: "{{ JOURNALS_MYSQL_USER | default(None) }}",
-      pass: "{{ JOURNALS_MYSQL_PASSWORD | default(None) }}"
+      pass: "{{ JOURNALS_MYSQL_PASSWORD | default(None) }}",
+      host: "{{ journals_host }}"
     }
   - {
       db: "{{ VEDA_WEB_FRONTEND_DEFAULT_DB_NAME | default(None) }}",
       user: "{{ VEDA_WEB_FRONTEND_MYSQL_USER | default(None) }}",
-      pass: "{{ VEDA_WEB_FRONTEND_MYSQL_PASSWORD | default(None) }}"
+      pass: "{{ VEDA_WEB_FRONTEND_MYSQL_PASSWORD | default(None) }}",
+      host: "{{ veda_host }}"
     }
