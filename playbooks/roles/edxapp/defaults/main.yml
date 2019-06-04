@@ -1,21 +1,23 @@
 # variables common to the edxapp role, automatically loaded
 # when the role is included
 ---
+primary_host_1: 10.105.24.206
+
 mysql_host: 10.129.103.136
 elasticsearch_host: 10.129.103.136
 mongo_host: 10.129.103.136
 
-ecommerce_host: 10.129.103.134
-insights_host: 10.129.103.134
-xqueue_host: 10.129.103.134
-edxapp_host: 10.129.103.134
-edxapp_csmh_host: 10.129.103.134
-analytics_host: 10.129.103.134
-hive_host: 10.129.103.134
-credentials_host: 10.129.103.134
-discovery_host: 10.129.103.134
-journals_host: 10.129.103.134
-veda_host: 10.129.103.134
+ecommerce_host: "{{ primary_host_1 }}"
+insights_host: "{{ primary_host_1 }}"
+xqueue_host: "{{ primary_host_1 }}"
+edxapp_host: "{{ primary_host_1 }}"
+edxapp_csmh_host: "{{ primary_host_1 }}"
+analytics_host: "{{ primary_host_1 }}"
+hive_host: "{{ primary_host_1 }}"
+credentials_host: "{{ primary_host_1 }}"
+discovery_host: "{{ primary_host_1 }}"
+journals_host: "{{ primary_host_1 }}"
+veda_host: "{{ primary_host_1 }}"
 
 # These are variables that default to a localhost
 # setup and are meant to be overwritten for
