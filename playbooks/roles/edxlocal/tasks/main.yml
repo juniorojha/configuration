@@ -32,6 +32,8 @@
   mysql_user:
     name: "{{ COMMON_MYSQL_MIGRATE_USER }}"
     password: "{{ COMMON_MYSQL_MIGRATE_PASS }}"
+    # This needs to be discussed
+    host: "{{ primary_host_1 }}"
     priv: "{{ item }}.*:ALL"
     append_privs: yes
   when: item != None and item != ''

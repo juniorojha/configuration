@@ -162,7 +162,26 @@ sudo -H pip install -r requirements.txt
 ## Run the openedx_native.yml playbook in the configuration/playbooks directory
 ##
 
-cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -vvv ./openedx_native.yml -i inventory.ini --ask-sudo-pass -e"@roles/edxapp/defaults/main.yml" -e"@roles/forum/defaults/main.yml" -e"@roles/xqueue/defaults/main.yml" -e"@roles/certs/defaults/main.yml" -e"@roles/analytics_api/defaults/main.yml" $EXTRA_VARS "$@"
+cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -vvv ./openedx_native.yml \
+ -i inventory.ini \
+ --ask-sudo-pass \
+ -e"@roles/analytics_api/defaults/main.yml" \
+ -e"@roles/certs/defaults/main.yml" \
+ -e"@roles/credentials/defaults/main.yml" \
+ -e"@roles/discovery/defaults/main.yml" \
+ -e"@roles/edxapp/defaults/main.yml" \
+ -e"@roles/edx_notes_api/defaults/main.yml" \
+ -e"@roles/ecommerce/defaults/main.yml" \
+ -e"@roles/elasticsearch/defaults/main.yml" \
+ -e"@roles/forum/defaults/main.yml" \
+ -e"@roles/insights/defaults/main.yml" \
+ -e"@roles/insights/defaults/main.yml" \
+ -e"@roles/journals/defaults/main.yml" \
+ -e"@roles/veda_web_frontend/defaults/main.yml" \
+ -e"@roles/video_pipeline_base/defaults/main.yml" \
+ -e"@roles/xqueue/defaults/main.yml" \
+ $EXTRA_VARS "$@"
+# cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -vvv ./openedx_native.yml -i inventory.ini --ask-sudo-pass -e"@roles/*/defaults/main.yml" $EXTRA_VARS "$@"
 
 #cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -vvv ./openedx_native.yml -i inventory.ini --ask-sudo-pass $EXTRA_VARS "$@"
 ansible_status=$?
