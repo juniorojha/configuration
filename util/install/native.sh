@@ -175,8 +175,8 @@ cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -vvv ./openedx_n
  -e"@roles/elasticsearch/defaults/main.yml" \
  -e"@roles/forum/defaults/main.yml" \
  -e"@roles/insights/defaults/main.yml" \
- -e"@roles/insights/defaults/main.yml" \
  -e"@roles/journals/defaults/main.yml" \
+ -e"@roles/notifier/defaults/main.yml" \
  -e"@roles/veda_web_frontend/defaults/main.yml" \
  -e"@roles/video_pipeline_base/defaults/main.yml" \
  -e"@roles/xqueue/defaults/main.yml" \
