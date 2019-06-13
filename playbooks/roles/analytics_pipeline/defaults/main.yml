@@ -23,6 +23,11 @@ ANALYTICS_PIPELINE_OUTPUT_DATABASE:
   host: "{{ ANALYTICS_PIPELINE_OUTPUT_DATABASE_HOST }}"
   port: "{{ ANALYTICS_PIPELINE_OUTPUT_DATABASE_PORT }}"
 
+# Where is this host going to be used? Is the user being created with this or being authenticated with this?
+# If we set the host here to {{ analytics_host }} it will be the IP of the localhost
+# But if tries to connect on localhost it will not find mysql
+# If we make this {{ mysql_host }} the user will be created successfully but cannot be authenticated.
+# WHAT IS THIS? Same with line 16 above.
 ANALYTICS_PIPELINE_INPUT_DATABASE:
   username: "{{ COMMON_MYSQL_READ_ONLY_USER }}"
   password: "{{ COMMON_MYSQL_READ_ONLY_PASS }}"

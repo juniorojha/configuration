@@ -30,4 +30,6 @@ cassandra_auto_bootstrap: false
 
 # For single-node locally-accessible deployments only! Otherwise, use:
 # cassandra_listen_address: ""
-cassandra_listen_address: localhost
+# cassandra_listen_address: "localhost"
+# IF THAT IS THE CASE, WHY EVEN BOTHER SETTING IT TO ANYTHING? LET IT BE "" FOR ALL DEPLOYMENTS.
+cassandra_listen_address: ""
