@@ -32,7 +32,7 @@
   mysql_user:
     name: "{{ COMMON_MYSQL_MIGRATE_USER }}"
     password: "{{ COMMON_MYSQL_MIGRATE_PASS }}"
-    # This needs to be discussed
+    # This needs to be discussed - in order to give access to user migrate on the host which ansible playbook is run from
     host: "{{ primary_host_1 }}"
     priv: "{{ item }}.*:ALL"
     append_privs: yes
