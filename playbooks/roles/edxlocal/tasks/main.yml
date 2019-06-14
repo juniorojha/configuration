@@ -83,7 +83,8 @@
   lineinfile:
     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
     regexp: '^bind-address\s+=\s+127\.0\.0\.1$'
-    state: absent
+    line: 'bind-address = 0.0.0.0'
+    state: present
 
 - name: restart mysql
   service:

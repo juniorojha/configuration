@@ -13,7 +13,9 @@
 
 ANALYTICS_PIPELINE_OUTPUT_DATABASE_USER: pipeline001
 ANALYTICS_PIPELINE_OUTPUT_DATABASE_PASSWORD: password
-ANALYTICS_PIPELINE_OUTPUT_DATABASE_HOST: localhost
+
+# Should this be changed to something else? What are these databses?
+ANALYTICS_PIPELINE_OUTPUT_DATABASE_HOST: '{{ mysql_host }}'
 ANALYTICS_PIPELINE_OUTPUT_DATABASE_PORT: 3306
 
 ANALYTICS_PIPELINE_OUTPUT_DATABASE_NAME: "{{ ANALYTICS_API_REPORTS_DB_NAME }}"
@@ -23,15 +25,11 @@ ANALYTICS_PIPELINE_OUTPUT_DATABASE:
   host: "{{ ANALYTICS_PIPELINE_OUTPUT_DATABASE_HOST }}"
   port: "{{ ANALYTICS_PIPELINE_OUTPUT_DATABASE_PORT }}"
 
-# Where is this host going to be used? Is the user being created with this or being authenticated with this?
-# If we set the host here to {{ analytics_host }} it will be the IP of the localhost
-# But if tries to connect on localhost it will not find mysql
-# If we make this {{ mysql_host }} the user will be created successfully but cannot be authenticated.
-# WHAT IS THIS? Same with line 16 above.
+# This should be set to {{ mysql_host }} in any case as during authentication, the IP of client is appended automatically
 ANALYTICS_PIPELINE_INPUT_DATABASE:
   username: "{{ COMMON_MYSQL_READ_ONLY_USER }}"
   password: "{{ COMMON_MYSQL_READ_ONLY_PASS }}"
-  host: localhost
+  host: '{{ mysql_host }}'
   port: 3306
 
 ANALYTICS_PIPELINE_CONFIG_DIR: "{{ COMMON_CFG_DIR }}/edx-analytics-pipeline"
