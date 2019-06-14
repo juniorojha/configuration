@@ -3,9 +3,9 @@
 ---
 primary_host_1: 10.105.24.206
 
-mysql_host: 10.129.103.134
-elasticsearch_host: 10.129.103.134
-mongo_host: 10.129.103.134
+mysql_host: 10.129.103.135
+elasticsearch_host: 10.129.103.135
+mongo_host: 10.129.103.135
 
 ecommerce_host: "{{ primary_host_1 }}"
 insights_host: "{{ primary_host_1 }}"
