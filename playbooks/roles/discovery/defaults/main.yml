@@ -55,7 +55,9 @@ DISCOVERY_MEMCACHE: [ 'memcache' ]
 
 DISCOVERY_VERSION: "master"
 DISCOVERY_DJANGO_SETTINGS_MODULE: "course_discovery.settings.production"
-DISCOVERY_URL_ROOT: 'http://discovery:{{ DISCOVERY_NGINX_PORT }}'
+# Removing it from here for now, because we have already added this in vars inside openedx_native.yml
+# Need to check how this works.
+# DISCOVERY_URL_ROOT: 'http://discovery:{{ DISCOVERY_NGINX_PORT }}'
 DISCOVERY_LOGOUT_URL: '{{ DISCOVERY_URL_ROOT }}/logout/'
 
 DISCOVERY_SECRET_KEY: 'Your secret key here'
