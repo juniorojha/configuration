@@ -157,7 +157,9 @@ EDXAPP_AWS_SES_REGION_ENDPOINT: "email.us-east-1.amazonaws.com"
 
 EDXAPP_LOG_LEVEL: 'INFO'
 
-EDXAPP_MEMCACHE: [ '10.129.103.136:11211' ]
+# Are we installing memcache in the same server as mysql? In edxlocal role, that seems likely. 
+# Need to discuss this and come up with a solution.
+EDXAPP_MEMCACHE: [ '{{ mysql_host }}:11211' ]
 EDXAPP_CACHE_COURSE_STRUCTURE_MEMCACHE: "{{ EDXAPP_MEMCACHE }}"
 EDXAPP_CACHE_BACKEND: 'django.core.cache.backends.memcached.MemcachedCache'
 EDXAPP_COMMENTS_SERVICE_URL:  'http://localhost:18080'
