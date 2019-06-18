@@ -84,7 +84,7 @@ error_page {{ k }} {{ v }};
   {% endif %}
 
 {% include "empty_json.j2" %}
-
+# It is here the EDXAPP_LMS_NGINX_PORT is set in the final /etc/nginx/sites-enabled/cms
   listen {{ EDXAPP_LMS_NGINX_PORT }} {{ default_site }};
 
   {% if NGINX_ENABLE_SSL %}

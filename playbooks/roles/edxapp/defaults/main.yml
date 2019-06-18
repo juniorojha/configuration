@@ -335,7 +335,10 @@ EDXAPP_LOGGING_ENV:  'sandbox'
 EDXAPP_SYSLOG_SERVER: ""
 EDXAPP_RABBIT_HOSTNAME: 'localhost'
 
-EDXAPP_LMS_NGINX_PORT: 18000
+# EDXAPP_LMS_NGINX_PORT has to be commented out from here since it is already defined in the vars inside openedx_native.yml
+# Otherwise this causes lms to not be available on port 80 and instead be on 18000
+# Which is not correct
+# EDXAPP_LMS_NGINX_PORT: 18000
 EDXAPP_LMS_SSL_NGINX_PORT: 48000
 
 EDXAPP_CMS_NGINX_PORT: 18010
