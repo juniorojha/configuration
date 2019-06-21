@@ -214,6 +214,7 @@
     - role: xqueue
       update_users: True
     - certs
+    - credentials
     - edx_ansible
     - role: datadog
       when: COMMON_ENABLE_DATADOG
