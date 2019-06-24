@@ -55,7 +55,10 @@ edx_django_service_debian_pkgs: '{{ edx_django_service_debian_pkgs_default + edx
 
 edx_django_service_gunicorn_extra: ''
 edx_django_service_gunicorn_extra_conf: ''
-edx_django_service_gunicorn_host: '127.0.0.1'
+
+# If bind is set to 127.0.0.1, we will not be able to access this via system IP
+# This needs to be changed to 0.0.0.0 as it is used in bind part in the template
+edx_django_service_gunicorn_host: '0.0.0.0'
 edx_django_service_gunicorn_port: null
 edx_django_service_gunicorn_timeout: 300
 edx_django_service_gunicorn_workers: 2
@@ -67,8 +70,10 @@ edx_django_service_allow_cors_headers: false
 edx_django_service_max_webserver_upload: !!null
 edx_django_service_allow_cors_credentials: false
 
+# Not sure about this, but on the same lines as edx_django_service_gunicorn_host,
+# this too should be 0.0.0.0
 nginx_edx_django_service_gunicorn_hosts:
-  - 127.0.0.1
+  - 0.0.0.0
 
 edx_django_service_hostname: '~^((stage|prod)-)?{{ edx_django_service_name }}.*'
 edx_django_service_nginx_port: '1{{ edx_django_service_gunicorn_port }}'

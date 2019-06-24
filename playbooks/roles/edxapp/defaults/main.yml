@@ -703,8 +703,11 @@ EDXAPP_ECOMMERCE_API_URL: "http://localhost:8002/api/v2"
 # TODO (CCB) Remove this after all references in edx/edx-platform have been removed.
 EDXAPP_ECOMMERCE_API_SIGNING_KEY: "{{ EDXAPP_JWT_SECRET_KEY }}"
 EDXAPP_COURSE_CATALOG_API_URL: "http://localhost:8008/api/v1"
-EDXAPP_CREDENTIALS_INTERNAL_SERVICE_URL: "http://localhost:8005"
-EDXAPP_CREDENTIALS_PUBLIC_SERVICE_URL: "http://localhost:8005"
+
+# credentials_gunicorn_port (in roles/credentials/defaults/main.yml) is set to 8150
+# then why does this point to 8005?
+EDXAPP_CREDENTIALS_INTERNAL_SERVICE_URL: "http://{{ lms_host }}:8150"
+EDXAPP_CREDENTIALS_PUBLIC_SERVICE_URL: "http://{{ lms_host }}:8150"
 
 # Journals Related Settings
 EDXAPP_JOURNALS_URL_ROOT: "https://journals-{{ EDXAPP_LMS_BASE }}"

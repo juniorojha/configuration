@@ -4,6 +4,9 @@ gunicorn configuration file: http://docs.gunicorn.org/en/develop/configure.html
 """
 
 timeout = {{ edx_django_service_gunicorn_timeout }}
+"""
+This bind address has to be 0.0.0.0
+"""
 bind = "{{ edx_django_service_gunicorn_host }}:{{ edx_django_service_gunicorn_port }}"
 pythonpath = "{{ edx_django_service_code_dir }}"
 workers = {{ edx_django_service_gunicorn_workers }}
