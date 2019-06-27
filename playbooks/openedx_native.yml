@@ -9,7 +9,7 @@
   roles:
     - python
 
-- name: Configure instance(s) [swapfile - all]
+- name: Configure instance(s)
   hosts: all
   become: True
   gather_facts: True
@@ -35,31 +35,6 @@
   roles:
     - role: swapfile
       SWAPFILE_SIZE: 4GB
-
-- name: Configure local services [part 1]
-  hosts: localhost
-  become: True
-  gather_facts: True
-  vars:
-    migrate_db: "yes"
-    EDXAPP_PREVIEW_LMS_BASE: EDXAPP_LMS_BASE
-    EDXAPP_LOGIN_REDIRECT_WHITELIST: [ "{{ EDXAPP_CMS_BASE }}" ]
-    EDXAPP_LMS_BASE_SCHEME: http
-    EDXAPP_LMS_NGINX_PORT: '80'
-    edx_platform_version: 'master'
-    # Set to false if deployed behind another proxy/load balancer.
-    NGINX_SET_X_FORWARDED_HEADERS: True
-    DISCOVERY_URL_ROOT: 'http://localhost:{{ DISCOVERY_NGINX_PORT }}'
-    COMMON_ENABLE_AWS_ROLE: false
-    ecommerce_create_demo_data: true
-    credentials_create_demo_data: true
-    SANDBOX_ENABLE_DISCOVERY: true
-    SANDBOX_ENABLE_ECOMMERCE: true
-    SANDBOX_ENABLE_ANALYTICS_API: true
-    SANDBOX_ENABLE_INSIGHTS: true
-    SANDBOX_ENABLE_RABBITMQ: true
-    JOURNALS_ENABLED: false
-  roles:
     - role: aws
       when: COMMON_ENABLE_AWS_ROLE
     - role: nginx
@@ -71,68 +46,12 @@
       - xqueue
       nginx_default_sites:
       - lms
-
-- name: Configure vm1 services [part 1]
-  hosts: vm1
-  become: True
-  gather_facts: True
-  vars:
-    migrate_db: "yes"
-    EDXAPP_PREVIEW_LMS_BASE: EDXAPP_LMS_BASE
-    EDXAPP_LOGIN_REDIRECT_WHITELIST: [ "{{ EDXAPP_CMS_BASE }}" ]
-    EDXAPP_LMS_BASE_SCHEME: http
-    EDXAPP_LMS_NGINX_PORT: '80'
-    edx_platform_version: 'master'
-    # Set to false if deployed behind another proxy/load balancer.
-    NGINX_SET_X_FORWARDED_HEADERS: True
-    DISCOVERY_URL_ROOT: 'http://localhost:{{ DISCOVERY_NGINX_PORT }}'
-    COMMON_ENABLE_AWS_ROLE: false
-    ecommerce_create_demo_data: true
-    credentials_create_demo_data: true
-    SANDBOX_ENABLE_DISCOVERY: true
-    SANDBOX_ENABLE_ECOMMERCE: true
-    SANDBOX_ENABLE_ANALYTICS_API: true
-    SANDBOX_ENABLE_INSIGHTS: true
-    SANDBOX_ENABLE_RABBITMQ: true
-    JOURNALS_ENABLED: false
-  roles:
     - role: edxlocal
-#      when: EDXAPP_MYSQL_HOST == 'localhost'
+      when: EDXAPP_MYSQL_HOST == 'localhost'
     - role: memcache
-#      when: "'localhost' in ' '.join(EDXAPP_MEMCACHE)"
+      when: "'localhost' in ' '.join(EDXAPP_MEMCACHE)"
     - role: mongo_3_2
-#      when: "'localhost' in EDXAPP_MONGO_HOSTS"
-
-- name: Configure local services [part 2]
-  hosts: localhost
-  become: True
-  gather_facts: True
-  vars:
-    migrate_db: "yes"
-    EDXAPP_PREVIEW_LMS_BASE: EDXAPP_LMS_BASE
-    EDXAPP_LOGIN_REDIRECT_WHITELIST: [ "{{ EDXAPP_CMS_BASE }}" ]
-    EDXAPP_LMS_BASE_SCHEME: http
-    EDXAPP_LMS_NGINX_PORT: '80'
-    edx_platform_version: 'master'
-    # Set to false if deployed behind another proxy/load balancer.
-    NGINX_SET_X_FORWARDED_HEADERS: True
-    DISCOVERY_URL_ROOT: 'http://localhost:{{ DISCOVERY_NGINX_PORT }}'
-    COMMON_ENABLE_AWS_ROLE: false
-    ecommerce_create_demo_data: true
-    credentials_create_demo_data: true
-    SANDBOX_ENABLE_DISCOVERY: true
-    SANDBOX_ENABLE_ECOMMERCE: true
-    SANDBOX_ENABLE_ANALYTICS_API: true
-    SANDBOX_ENABLE_INSIGHTS: true
-    SANDBOX_ENABLE_RABBITMQ: true
-    JOURNALS_ENABLED: false
-  roles:
-    # - role: edxlocal
-    #   when: EDXAPP_MYSQL_HOST == 'localhost'
-    # - role: memcache
-    #   when: "'localhost' in ' '.join(EDXAPP_MEMCACHE)"
-    # - role: mongo_3_2
-    #   when: "'localhost' in EDXAPP_MONGO_HOSTS"
+      when: "'localhost' in EDXAPP_MONGO_HOSTS"
     - role: rabbitmq
       rabbitmq_ip: 127.0.0.1
       when: SANDBOX_ENABLE_RABBITMQ
@@ -152,58 +71,8 @@
     - demo
     - oauth_client_setup
     - oraclejdk
-
-- name: Configure vm1 services [part 2]
-  hosts: vm1
-  become: True
-  gather_facts: True
-  vars:
-    migrate_db: "yes"
-    EDXAPP_PREVIEW_LMS_BASE: EDXAPP_LMS_BASE
-    EDXAPP_LOGIN_REDIRECT_WHITELIST: [ "{{ EDXAPP_CMS_BASE }}" ]
-    EDXAPP_LMS_BASE_SCHEME: http
-    EDXAPP_LMS_NGINX_PORT: '80'
-    edx_platform_version: 'master'
-    # Set to false if deployed behind another proxy/load balancer.
-    NGINX_SET_X_FORWARDED_HEADERS: True
-    DISCOVERY_URL_ROOT: 'http://localhost:{{ DISCOVERY_NGINX_PORT }}'
-    COMMON_ENABLE_AWS_ROLE: false
-    ecommerce_create_demo_data: true
-    credentials_create_demo_data: true
-    SANDBOX_ENABLE_DISCOVERY: true
-    SANDBOX_ENABLE_ECOMMERCE: true
-    SANDBOX_ENABLE_ANALYTICS_API: true
-    SANDBOX_ENABLE_INSIGHTS: true
-    SANDBOX_ENABLE_RABBITMQ: true
-    JOURNALS_ENABLED: false
-  roles:
     - role: elasticsearch
-#      when: "'localhost' in EDXAPP_ELASTIC_SEARCH_CONFIG|map(attribute='host')"
-
-- name: Configure local services [part 3]
-  hosts: localhost
-  become: True
-  gather_facts: True
-  vars:
-    migrate_db: "yes"
-    EDXAPP_PREVIEW_LMS_BASE: EDXAPP_LMS_BASE
-    EDXAPP_LOGIN_REDIRECT_WHITELIST: [ "{{ EDXAPP_CMS_BASE }}" ]
-    EDXAPP_LMS_BASE_SCHEME: http
-    EDXAPP_LMS_NGINX_PORT: '80'
-    edx_platform_version: 'master'
-    # Set to false if deployed behind another proxy/load balancer.
-    NGINX_SET_X_FORWARDED_HEADERS: True
-    DISCOVERY_URL_ROOT: 'http://localhost:{{ DISCOVERY_NGINX_PORT }}'
-    COMMON_ENABLE_AWS_ROLE: false
-    ecommerce_create_demo_data: true
-    credentials_create_demo_data: true
-    SANDBOX_ENABLE_DISCOVERY: true
-    SANDBOX_ENABLE_ECOMMERCE: true
-    SANDBOX_ENABLE_ANALYTICS_API: true
-    SANDBOX_ENABLE_INSIGHTS: true
-    SANDBOX_ENABLE_RABBITMQ: true
-    JOURNALS_ENABLED: false
-  roles:
+      when: "'localhost' in EDXAPP_ELASTIC_SEARCH_CONFIG|map(attribute='host')"
     - forum
     - role: discovery
       when: SANDBOX_ENABLE_DISCOVERY
@@ -214,7 +83,6 @@
     - role: xqueue
       update_users: True
     - certs
-    - credentials
     - edx_ansible
     - role: datadog
       when: COMMON_ENABLE_DATADOG
@@ -224,4 +92,3 @@
       when: POSTFIX_QUEUE_EXTERNAL_SMTP_HOST != ''
     - role: datadog-uninstall
       when: not COMMON_ENABLE_DATADOG
-

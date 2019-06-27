@@ -4,11 +4,11 @@
 # Set this to true if the final environment will have SSL
 production_build: false
 
-primary_host_1: 10.105.24.206
+primary_host_1: localhost
 
-mysql_host: 10.129.103.137
-elasticsearch_host: 10.129.103.137
-mongo_host: 10.129.103.137
+mysql_host: localhost
+elasticsearch_host: localhost
+mongo_host: localhost
 
 ecommerce_host: "{{ primary_host_1 }}"
 insights_host: "{{ primary_host_1 }}"
@@ -1538,10 +1538,13 @@ edxapp_code_dir: "{{ edxapp_app_dir }}/edx-platform"
 
 
 # gunicorn ports/hosts, these shouldn't need to be overridden
+
+# If we don't override this then how do we expect to communicate with it?
+# If this is not 0.0.0.0 then how will it be accessible via IP or domain?
 edxapp_cms_gunicorn_port: 8010
-edxapp_cms_gunicorn_host: 127.0.0.1
+edxapp_cms_gunicorn_host: 0.0.0.0
 edxapp_lms_gunicorn_port: 8000
-edxapp_lms_gunicorn_host: 127.0.0.1
+edxapp_lms_gunicorn_host: 0.0.0.0
 
 # These vars are for creating the application json config
 # files.  There are two for each service that uses the

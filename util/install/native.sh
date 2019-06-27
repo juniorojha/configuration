@@ -162,14 +162,16 @@ sudo -H pip install -r requirements.txt
 ## Run the openedx_native.yml playbook in the configuration/playbooks directory
 ##
 
+# Keep edxapp/defaults/main.yml because it defines some variables that might be used later
+# Just in case preference order of these files matters
 cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -vvv ./openedx_native.yml \
  -i inventory.ini \
  --ask-sudo-pass \
+ -e"@roles/edxapp/defaults/main.yml" \
  -e"@roles/analytics_api/defaults/main.yml" \
  -e"@roles/certs/defaults/main.yml" \
  -e"@roles/credentials/defaults/main.yml" \
  -e"@roles/discovery/defaults/main.yml" \
- -e"@roles/edxapp/defaults/main.yml" \
  -e"@roles/edx_notes_api/defaults/main.yml" \
  -e"@roles/ecommerce/defaults/main.yml" \
  -e"@roles/elasticsearch/defaults/main.yml" \
