@@ -698,11 +698,12 @@ EDXAPP_CSRF_COOKIE_SECURE: false
 EDXAPP_LOGIN_REDIRECT_WHITELIST: []
 
 # E-Commerce Related Settings
-EDXAPP_ECOMMERCE_PUBLIC_URL_ROOT: "http://localhost:8002"
-EDXAPP_ECOMMERCE_API_URL: "http://localhost:8002/api/v2"
+EDXAPP_ECOMMERCE_PUBLIC_URL_ROOT: "http://{{ ecommerce_host }}:8002"
+EDXAPP_ECOMMERCE_API_URL: "http://{{ ecommerce_host }}:8002/api/v2"
 # TODO (CCB) Remove this after all references in edx/edx-platform have been removed.
 EDXAPP_ECOMMERCE_API_SIGNING_KEY: "{{ EDXAPP_JWT_SECRET_KEY }}"
-EDXAPP_COURSE_CATALOG_API_URL: "http://localhost:8008/api/v1"
+# This should have some lms_host component - Ojha
+EDXAPP_COURSE_CATALOG_API_URL: "http://{{ lms_host }}:8008/api/v1"
 
 # credentials_gunicorn_port (in roles/credentials/defaults/main.yml) is set to 8150
 # then why does this point to 8005?
