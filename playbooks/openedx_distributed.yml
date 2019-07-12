@@ -1,0 +1,265 @@
+---
+
+# Need to check which of these is required to be put in server_vars
+migrate_db: "yes"
+EDXAPP_PREVIEW_LMS_BASE: EDXAPP_LMS_BASE
+EDXAPP_LOGIN_REDIRECT_WHITELIST: [ "{{ EDXAPP_CMS_BASE }}" ]
+EDXAPP_LMS_BASE_SCHEME: http
+EDXAPP_LMS_NGINX_PORT: '80'
+edx_platform_version: 'master'
+# Set to false if deployed behind another proxy/load balancer.
+NGINX_SET_X_FORWARDED_HEADERS: True
+DISCOVERY_URL_ROOT: 'http://localhost:{{ DISCOVERY_NGINX_PORT }}'
+COMMON_ENABLE_AWS_ROLE: false
+ecommerce_create_demo_data: true
+credentials_create_demo_data: true
+SANDBOX_ENABLE_DISCOVERY: true
+SANDBOX_ENABLE_ECOMMERCE: true
+SANDBOX_ENABLE_ANALYTICS_API: true
+SANDBOX_ENABLE_INSIGHTS: true
+SANDBOX_ENABLE_RABBITMQ: true
+JOURNALS_ENABLED: false
+
+# Open edX Native installation for single server community installs.
+
+- name: Bootstrap instance(s)
+  hosts: all
+  gather_facts: no
+  become: True
+  roles:
+    - python
+
+- name: Configure instance(s) [swapfile - all]
+  hosts: all
+  become: True
+  gather_facts: True
+  roles:
+    - role: swapfile
+      SWAPFILE_SIZE: 4GB
+
+- name: Configure AWS
+  hosts: localhost
+  become: True
+  gather_facts: True
+  roles:
+    - role: aws
+      when: COMMON_ENABLE_AWS_ROLE
+
+- name: Configure nginx
+  hosts: localhost
+  become: True
+  gather_facts: True
+  roles:
+    - role: nginx
+      nginx_sites:
+      - certs
+      - cms
+      - lms
+      - forum
+      - xqueue
+      nginx_default_sites:
+      - lms
+
+- name: Configure edxlocal
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: edxlocal
+#      when: EDXAPP_MYSQL_HOST == 'localhost'
+
+- name: Configure memcache
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: memcache
+#      when: "'localhost' in ' '.join(EDXAPP_MEMCACHE)"
+
+- name: Configure mongodb
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: mongo_3_2
+#      when: "'localhost' in EDXAPP_MONGO_HOSTS"
+
+- name: Configure rabbitmq
+  hosts: localhost
+  become: True
+  gather_facts: True
+  roles:
+    - role: rabbitmq
+      rabbitmq_ip: 127.0.0.1
+      when: SANDBOX_ENABLE_RABBITMQ
+
+- name: Configure edxapp with celery
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: edxapp
+      celery_worker: True
+
+- name: Configure edxapp
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - edxapp
+
+- name: Configure ecommerce
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: ecommerce
+      when: SANDBOX_ENABLE_ECOMMERCE
+
+- name: Configure ecommerce worker
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: ecomworker
+      ECOMMERCE_WORKER_BROKER_HOST: 127.0.0.1
+      when: SANDBOX_ENABLE_ECOMMERCE
+
+- name: Configure analytics_api
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: analytics_api
+      when: SANDBOX_ENABLE_ANALYTICS_API
+
+- name: Configure insights
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: insights
+      when: SANDBOX_ENABLE_INSIGHTS
+    # not ready yet: - edx_notes_api
+
+- name: Configure demo
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - demo
+
+- name: Configure OAuth
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - oauth_client_setup
+
+- name: Configure OracleJDK
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - oraclejdk
+
+- name: Configure Elasticsearch
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: elasticsearch
+#      when: "'localhost' in EDXAPP_ELASTIC_SEARCH_CONFIG|map(attribute='host')"
+
+- name: Configure forum
+  hosts: localhost
+  become: True
+  gather_facts: True
+  roles:
+    - forum
+
+- name: Configure discovery
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: discovery
+      when: SANDBOX_ENABLE_DISCOVERY
+
+- name: Configure journals
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: journals
+      when: JOURNALS_ENABLED
+
+- name: Configure notifier
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: notifier
+      NOTIFIER_DIGEST_TASK_INTERVAL: 5
+
+- name: Configure xqueue
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: xqueue
+      update_users: True
+
+- name: Configure certs
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - certs
+
+- name: Configure credentials
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - credentials
+
+- name: Configure edx_ansible
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - edx_ansible
+
+- name: Configure datadog
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: datadog
+      when: COMMON_ENABLE_DATADOG
+
+- name: Configure splunkforwarder
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: splunkforwarder
+      when: COMMON_ENABLE_SPLUNKFORWARDER
+
+- name: Configure postfix_queue
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: postfix_queue
+      when: POSTFIX_QUEUE_EXTERNAL_SMTP_HOST != ''
+
+- name: Configure datadog-uninstall
+  hosts: vm1
+  become: True
+  gather_facts: True
+  roles:
+    - role: datadog-uninstall
+      when: not COMMON_ENABLE_DATADOG
+
