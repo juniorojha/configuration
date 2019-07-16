@@ -183,6 +183,7 @@ cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -vvv ./openedx_d
  -e"@roles/veda_web_frontend/defaults/main.yml" \
  -e"@roles/video_pipeline_base/defaults/main.yml" \
  -e"@roles/xqueue/defaults/main.yml" \
+ -e"@distributed_vars.yml" \
  $EXTRA_VARS "$@"
 # cd /var/tmp/configuration/playbooks && sudo -E ansible-playbook -vvv ./openedx_native.yml -i inventory.ini --ask-sudo-pass -e"@roles/*/defaults/main.yml" $EXTRA_VARS "$@"
 
