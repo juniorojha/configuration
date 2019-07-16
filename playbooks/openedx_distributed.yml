@@ -72,7 +72,7 @@
   gather_facts: True
   roles:
     - role: rabbitmq
-      rabbitmq_ip: {{ rabbitmq_host }}
+      rabbitmq_ip: "{{ rabbitmq_host }}"
       when: SANDBOX_ENABLE_RABBITMQ
 
 - name: Configure edxapp with celery
