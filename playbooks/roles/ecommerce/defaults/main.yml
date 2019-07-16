@@ -23,7 +23,7 @@ ECOMMERCE_SSL_NGINX_PORT: 48130
 # Memcache seems to be installed where MySQL is installed
 # therefore this is being set to mysql_host defined in roles/edxapp/defaults/main.yml
 ECOMMERCE_MEMCACHE:
-  - {{ mysql_host }}:11211
+  - "{{ mysql_host }}":11211
 
 ECOMMERCE_DATABASE_NAME: ecommerce
 ECOMMERCE_DATABASE_USER: ecomm001
