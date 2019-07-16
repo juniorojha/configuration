@@ -106,7 +106,7 @@
   gather_facts: True
   roles:
     - role: ecomworker
-      ECOMMERCE_WORKER_BROKER_HOST: {{ ecommerce_host }}
+      ECOMMERCE_WORKER_BROKER_HOST: "{{ ecommerce_host }}"
       when: SANDBOX_ENABLE_ECOMMERCE
 
 - name: Configure analytics_api
