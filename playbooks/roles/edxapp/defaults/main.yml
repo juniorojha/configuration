@@ -4,11 +4,11 @@
 # Set this to true if the final environment will have SSL
 production_build: false
 
-primary_host_1: localhost
+primary_host_1: 10.129.103.134
 
-mysql_host: localhost
-elasticsearch_host: localhost
-mongo_host: localhost
+mysql_host: 10.129.103.136
+elasticsearch_host: 10.129.103.136
+mongo_host: 10.129.103.136
 
 ecommerce_host: "{{ primary_host_1 }}"
 insights_host: "{{ primary_host_1 }}"
@@ -24,6 +24,9 @@ veda_host: "{{ primary_host_1 }}"
 
 lms_host: "{{ primary_host_1 }}"
 cms_host: "{{ primary_host_1 }}"
+
+edxapp_notes_host: "{{ primary_host_1 }}"
+rabbitmq_host: "{{ primary_host_1 }}"
 
 # These are variables that default to a localhost
 # setup and are meant to be overwritten for
@@ -88,7 +91,7 @@ EDXAPP_XQUEUE_BASIC_AUTH: [ "{{ COMMON_HTPASSWD_USER }}", "{{ COMMON_HTPASSWD_PA
 EDXAPP_XQUEUE_DJANGO_AUTH:
   username: 'lms'
   password: 'password'
-EDXAPP_XQUEUE_URL: 'http://localhost:18040'
+EDXAPP_XQUEUE_URL: 'http://{{ xqueue_host }}:18040'
 
 # Comma-separated list of hosts/ips
 EDXAPP_MONGO_HOSTS: "{{ mongo_host }}"
@@ -168,7 +171,7 @@ EDXAPP_LOG_LEVEL: 'INFO'
 EDXAPP_MEMCACHE: [ '{{ mysql_host }}:11211' ]
 EDXAPP_CACHE_COURSE_STRUCTURE_MEMCACHE: "{{ EDXAPP_MEMCACHE }}"
 EDXAPP_CACHE_BACKEND: 'django.core.cache.backends.memcached.MemcachedCache'
-EDXAPP_COMMENTS_SERVICE_URL:  'http://localhost:18080'
+EDXAPP_COMMENTS_SERVICE_URL:  'http://{{ lms_host }}:18080'
 # EDXAPP_COMMENTS_SERVICE_KEY must match FORUM_API_KEY
 EDXAPP_COMMENTS_SERVICE_KEY:  'password'
 
@@ -213,7 +216,7 @@ EDXAPP_STUDIO_SHORT_NAME: 'Studio'
 EDXAPP_ANALYTICS_DASHBOARD_NAME: "{{ EDXAPP_PLATFORM_NAME }} Insights"
 
 EDXAPP_LMS_ANALYTICS_API_KEY: ''
-EDXAPP_LMS_ANALYTICS_API_URL: 'http://localhost:18100'
+EDXAPP_LMS_ANALYTICS_API_URL: 'http://{{ lms_host }}:18100'
 
 EDXAPP_CAS_SERVER_URL: ""
 EDXAPP_CAS_EXTRA_LOGIN_PARAMS: ""
@@ -347,7 +350,7 @@ EDXAPP_FEEDBACK_SUBMISSION_EMAIL: ""
 EDXAPP_LOGGING_ENV:  'sandbox'
 
 EDXAPP_SYSLOG_SERVER: ""
-EDXAPP_RABBIT_HOSTNAME: 'localhost'
+EDXAPP_RABBIT_HOSTNAME: "{{ rabbitmq_host }}"
 
 # EDXAPP_LMS_NGINX_PORT has to be commented out from here since it is already defined in the vars inside openedx_native.yml
 # Otherwise this causes lms to not be available on port 80 and instead be on 18000
@@ -627,7 +630,7 @@ EDXAPP_CODE_JAIL_LIMITS:
 #   cms: <num workers>
 EDXAPP_WORKERS: !!null
 # Dashboard URL, assumes that the insights role is installed locally
-EDXAPP_ANALYTICS_DASHBOARD_URL: "http://localhost:18110/courses"
+EDXAPP_ANALYTICS_DASHBOARD_URL: "http://{{ insights_host }}:18110/courses"
 
 EDXAPP_REGISTRATION_EXTRA_FIELDS:
   confirm_email: "hidden"
@@ -776,8 +779,8 @@ EDXAPP_PARSE_KEYS: {}
 # In a production environment when using separate clusters, you'll
 # want to route requests differently from the LMS (internal api) and
 # from JS (public API)
-EDXAPP_EDXNOTES_PUBLIC_API: http://localhost:18120/api/v1
-EDXAPP_EDXNOTES_INTERNAL_API: http://localhost:18120/api/v1
+EDXAPP_EDXNOTES_PUBLIC_API: http://{{ edxapp_notes_host }}:18120/api/v1
+EDXAPP_EDXNOTES_INTERNAL_API: http://{{ edxapp_notes_host }}:18120/api/v1
 
 EDXAPP_XBLOCK_SETTINGS: {}
 

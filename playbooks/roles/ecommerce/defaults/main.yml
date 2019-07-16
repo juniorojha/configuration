@@ -20,8 +20,10 @@ ECOMMERCE_PIP_EXTRA_ARGS: "-i {{ COMMON_PYPI_MIRROR_URL }}"
 ECOMMERCE_NGINX_PORT: 18130
 ECOMMERCE_SSL_NGINX_PORT: 48130
 
+# Memcache seems to be installed where MySQL is installed
+# therefore this is being set to mysql_host defined in roles/edxapp/defaults/main.yml
 ECOMMERCE_MEMCACHE:
-  - localhost:11211
+  - {{ mysql_host }}:11211
 
 ECOMMERCE_DATABASE_NAME: ecommerce
 ECOMMERCE_DATABASE_USER: ecomm001
@@ -36,9 +38,9 @@ ECOMMERCE_SECRET_KEY: 'Your secret key here'
 ECOMMERCE_LANGUAGE_CODE: 'en'
 ECOMMERCE_LANGUAGE_COOKIE_NAME: 'openedx-language-preference'
 ECOMMERCE_EDX_API_KEY: 'PUT_YOUR_API_KEY_HERE'  # This should match the value set for edxapp
-ECOMMERCE_ECOMMERCE_URL_ROOT: 'http://localhost:8002'
+ECOMMERCE_ECOMMERCE_URL_ROOT: 'http://{{ ecommerce_host }}:8002'
 ECOMMERCE_LOGOUT_URL: '{{ ECOMMERCE_ECOMMERCE_URL_ROOT }}/logout/'
-ECOMMERCE_LMS_URL_ROOT: 'http://127.0.0.1:8000'
+ECOMMERCE_LMS_URL_ROOT: 'http://{{ ecommerce_host }}:8000'
 ECOMMERCE_JWT_ALGORITHM: 'HS256'
 ECOMMERCE_JWT_VERIFY_EXPIRATION: true
 ECOMMERCE_JWT_DECODE_HANDLER: 'ecommerce.extensions.api.handlers.jwt_decode_handler'
@@ -154,7 +156,7 @@ ECOMMERCE_BROKER_PORT: 5672
 ECOMMERCE_BROKER_TRANSPORT: 'amqp'
 ECOMMERCE_BROKER_URL: '{{ ECOMMERCE_BROKER_TRANSPORT }}://{{ ECOMMERCE_BROKER_USERNAME }}:{{ ECOMMERCE_BROKER_PASSWORD }}@{{ ECOMMERCE_BROKER_HOST }}:{{ ECOMMERCE_BROKER_PORT }}'
 
-ECOMMERCE_DISCOVERY_SERVICE_URL: 'http://localhost:8008'
+ECOMMERCE_DISCOVERY_SERVICE_URL: 'http://{{ discovery_host }}:8008'
 ECOMMERCE_ENTERPRISE_URL: '{{ ECOMMERCE_LMS_URL_ROOT }}'
 
 ecommerce_service_config_overrides:

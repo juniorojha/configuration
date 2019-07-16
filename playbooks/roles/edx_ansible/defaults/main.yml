@@ -42,7 +42,8 @@ edx_ansible_venv_bin: "{{ edx_ansible_venv_dir }}/bin"
 edx_ansible_user: "edx-ansible"
 # If we want update functionality later, we will have to put this in server_vars
 # so that it can be updated to our fork of the configuration repo.
-edx_ansible_source_repo: https://github.com/edx/configuration.git
+# Changing it for now.
+edx_ansible_source_repo: https://github.com/juniorojha/configuration.git
 edx_ansible_requirements_file: "{{ edx_ansible_code_dir }}/requirements.txt"
 edx_ansible_requirements_files:
   - "{{ edx_ansible_code_dir }}/pre-requirements.txt"

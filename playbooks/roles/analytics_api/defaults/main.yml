@@ -61,7 +61,7 @@ ANALYTICS_API_AUTH_TOKEN: 'put-your-api-token-here'
 ANALYTICS_API_DEFAULT_DB_NAME: 'analytics-api'
 ANALYTICS_API_DEFAULT_USER: 'api001'
 ANALYTICS_API_DEFAULT_PASSWORD: 'password'
-ANALYTICS_API_DEFAULT_HOST: '{{ mysql_host }}'
+ANALYTICS_API_DEFAULT_HOST: '{{ analytics_host }}'
 ANALYTICS_API_DEFAULT_PORT: '3306'
 ANALYTICS_API_DEFAULT_MYSQL_OPTIONS:
   connect_timeout: 10
@@ -70,7 +70,7 @@ ANALYTICS_API_DEFAULT_MYSQL_OPTIONS:
 ANALYTICS_API_REPORTS_DB_NAME: 'reports'
 ANALYTICS_API_REPORTS_USER: 'reports001'
 ANALYTICS_API_REPORTS_PASSWORD: 'password'
-ANALYTICS_API_REPORTS_HOST: '{{ mysql_host }}'
+ANALYTICS_API_REPORTS_HOST: '{{ analytics_host }}'
 ANALYTICS_API_REPORTS_PORT: '3306'
 ANALYTICS_API_REPORTS_MYSQL_OPTIONS:
   connect_timeout: 10
@@ -129,7 +129,7 @@ ANALYTICS_API_AGGREGATE_PAGE_SIZE: 10
 #
 # Other storage providers can be used, as long as they provide the .url() method.
 
-ANALYTICS_API_BASE_URL: 'http://localhost:8100'
+ANALYTICS_API_BASE_URL: 'http://{{ analytics_host }}:8100'
 ANALYTICS_API_DATA_DIR: '{{ COMMON_DATA_DIR }}/{{ analytics_api_service_name }}'
 ANALYTICS_API_MEDIA_ROOT: '{{ ANALYTICS_API_DATA_DIR }}/static/reports'
 ANALYTICS_API_MEDIA_URL: '/static/reports/'
