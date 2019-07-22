@@ -11,10 +11,11 @@
 # Defaults for role insights
 #
 
-INSIGHTS_LMS_BASE: 'http://127.0.0.1:8000'
-INSIGHTS_CMS_BASE: 'http://127.0.0.1:8010'
-INSIGHTS_BASE_URL: 'http://127.0.0.1:8110'
-INSIGHTS_MEMCACHE: [ '127.0.0.1:11211' ]
+INSIGHTS_LMS_BASE: 'http://{{ insights_host }}:8000'
+INSIGHTS_CMS_BASE: 'http://{{ insights_host }}:8010'
+INSIGHTS_BASE_URL: 'http://{{ insights_host }}:8110'
+# Assuming memcache is installed on the same server as mysql - otherwise change this
+INSIGHTS_MEMCACHE: [ '{{ mysql_host }}:11211' ]
 INSIGHTS_MKTG_BASE: 'http://example.com'
 INSIGHTS_LOGOUT_URL: '{{ INSIGHTS_MKTG_BASE }}/accounts/logout/'
 INSIGHTS_PRIVACY_POLICY_URL: '{{ INSIGHTS_MKTG_BASE }}/privacy-policy'
@@ -31,8 +32,8 @@ INSIGHTS_SOCIAL_AUTH_REDIRECT_IS_HTTPS: false
 INSIGHTS_SECRET_KEY: 'YOUR_SECRET_KEY_HERE'
 INSIGHTS_OAUTH2_KEY: 'YOUR_OAUTH2_KEY'
 # This will not work on single instance sandboxes
-INSIGHTS_DOC_BASE: 'http://127.0.0.1/en/latest'
-ANALYTICS_API_ENDPOINT: 'http://127.0.0.1:8100/api/v0'
+INSIGHTS_DOC_BASE: 'http://{{ insights_host }}/en/latest'
+ANALYTICS_API_ENDPOINT: 'http://{{ insights_host }}:8100/api/v0'
 INSIGHTS_DATA_API_AUTH_TOKEN: 'changeme'
 INSIGHTS_PLATFORM_NAME: 'edX'
 INSIGHTS_APPLICATION_NAME: 'Insights'
@@ -200,7 +201,7 @@ insights_node_modules_dir: "{{ insights_code_dir }}/node_modules"
 insights_node_bin: "{{ insights_node_modules_dir }}/.bin"
 insights_node_version: "{{ common_node_version }}"
 
-insights_gunicorn_host: "127.0.0.1"
+insights_gunicorn_host: "0.0.0.0"
 insights_gunicorn_port: "8110"
 insights_gunicorn_timeout: "300"
 insights_wsgi: "analytics_dashboard.wsgi:application"

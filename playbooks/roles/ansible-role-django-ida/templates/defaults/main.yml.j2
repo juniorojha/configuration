@@ -126,7 +126,7 @@ nginx_{{ role_name }}_gunicorn_hosts:
 {{ role_name }}_home: "{{ '{{' }} COMMON_APP_DIR }}/{{ '{{' }} {{ role_name }}_service_name }}"
 {{ role_name }}_code_dir: "{{ '{{' }} {{ role_name }}_home }}/{{ '{{' }} {{ role_name }}_service_name }}"
 
-{{ role_name }}_gunicorn_host: "127.0.0.1"
+{{ role_name }}_gunicorn_host: "0.0.0.0"
 {{ role_name }}_gunicorn_port: 8{{ port_suffix }}
 {{ role_name }}_gunicorn_timeout: 300
 
