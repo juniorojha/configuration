@@ -67,7 +67,7 @@
 #      when: "'localhost' in EDXAPP_MONGO_HOSTS"
 
 - name: Configure rabbitmq
-  hosts: localhost
+  hosts: vm2
   become: True
   gather_facts: True
   roles:
@@ -163,7 +163,7 @@
     - oraclejdk
 
 - name: Configure Elasticsearch
-  hosts: vm1
+  hosts: vm2
   become: True
   gather_facts: True
   roles:

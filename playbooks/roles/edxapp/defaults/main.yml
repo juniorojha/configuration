@@ -4,11 +4,13 @@
 # Set this to true if the final environment will have SSL
 production_build: false
 
-primary_host_1: 10.129.103.134
+primary_host_1: 10.129.103.140
+primary_host_2: 10.129.103.141
+primary_host_3: 10.129.103.142
 
-mysql_host: 10.129.103.136
-elasticsearch_host: 10.129.103.136
-mongo_host: 10.129.103.136
+mysql_host: {{ primary_host_2 }}
+elasticsearch_host: {{ primary_host_3 }}
+mongo_host: {{ primary_host_2 }}
 
 ecommerce_host: "{{ primary_host_1 }}"
 insights_host: "{{ primary_host_1 }}"
@@ -26,7 +28,7 @@ lms_host: "{{ primary_host_1 }}"
 cms_host: "{{ primary_host_1 }}"
 
 edxapp_notes_host: "{{ primary_host_1 }}"
-rabbitmq_host: "{{ primary_host_1 }}"
+rabbitmq_host: "{{ primary_host_3 }}"
 
 # These are variables that default to a localhost
 # setup and are meant to be overwritten for

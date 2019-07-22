@@ -151,7 +151,7 @@ xqueue_home: "{{ COMMON_APP_DIR }}/{{ xqueue_service_name }}"
 # These should be overrided if you want
 # to serve all content on port 80
 xqueue_gunicorn_port: 8040
-xqueue_gunicorn_host: 127.0.0.1
+xqueue_gunicorn_host: 0.0.0.0
 
 xqueue_environment:
   DJANGO_SETTINGS_MODULE: 'xqueue.{{ XQUEUE_SETTINGS }}'
