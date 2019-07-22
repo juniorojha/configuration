@@ -106,13 +106,14 @@
     line: "LogLevel VERBOSE"
   register: sshd_config_line1
 
-- name: Update sshd logging to VERBOSE
-  lineinfile:
-    dest: /etc/ssh/sshd_config
-    state: present
-    regexp: "^PasswordAuthentication .*"
-    line: "PasswordAuthentication {{ COMMON_SSH_PASSWORD_AUTH }}"
-  register: sshd_config_line2
+# This is an unnecessary task
+#- name: Update sshd password authentication config
+#  lineinfile:
+#    dest: /etc/ssh/sshd_config
+#    state: present
+#    regexp: "^PasswordAuthentication .*"
+#    line: "PasswordAuthentication {{ COMMON_SSH_PASSWORD_AUTH }}"
+#  register: sshd_config_line2
 
 - name: Restart ssh
   service:

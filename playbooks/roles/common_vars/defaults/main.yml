@@ -72,6 +72,7 @@ COMMON_CUSTOM_DHCLIENT_CONFIG: false
 # uncomment and specifity your domains.
 # COMMON_DHCLIENT_DNS_SEARCH: ["ec2.internal","example.com"]
 
+# Why should this be 'no'? Using this makes target servers inaccessible via SSH.
 COMMON_SSH_PASSWORD_AUTH: "no"
 
 COMMON_SECURITY_UPDATES: no
