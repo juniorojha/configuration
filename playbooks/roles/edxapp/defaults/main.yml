@@ -8,9 +8,9 @@ primary_host_1: 10.129.103.140
 primary_host_2: 10.129.103.141
 primary_host_3: 10.129.103.142
 
-mysql_host: {{ primary_host_2 }}
-elasticsearch_host: {{ primary_host_3 }}
-mongo_host: {{ primary_host_2 }}
+mysql_host: "{{ primary_host_2 }}"
+elasticsearch_host: "{{ primary_host_3 }}"
+mongo_host: "{{ primary_host_2 }}"
 
 ecommerce_host: "{{ primary_host_1 }}"
 insights_host: "{{ primary_host_1 }}"
