@@ -249,7 +249,8 @@ EDXAPP_ENABLE_EDXNOTES: false
 EDXAPP_ENABLE_CREDIT_ELIGIBILITY: false
 EDXAPP_ENABLE_CREDIT_API: false
 
-EDXAPP_CUSTOM_COURSES_EDX: false
+#Enabling custom courses
+EDXAPP_CUSTOM_COURSES_EDX: true
 
 EDXAPP_ENABLE_SYSADMIN_DASHBOARD: false
 # This is different from lms/envs/common.py

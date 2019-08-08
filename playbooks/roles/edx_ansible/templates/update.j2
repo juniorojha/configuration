@@ -56,7 +56,28 @@ fi
 
 declare -A repos_to_cmd
 # Update inventory, vars and connection here. Need to make this command similar to one in native.sh
-edx_ansible_cmd="{{ edx_ansible_venv_bin }}/ansible-playbook -i localhost, -c local $extra_args"
+# edx_ansible_cmd="{{ edx_ansible_venv_bin }}/ansible-playbook -i localhost, -c local $extra_args"
+edx_ansible_cmd='/edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook -vvv \
+ -i inventory.ini \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/edxapp/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/analytics_api/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/certs/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/common_vars/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/credentials/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/discovery/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/edx_notes_api/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/ecommerce/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/elasticsearch/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/forum/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/insights/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/journals/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/notifier/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/veda_web_frontend/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/video_pipeline_base/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/roles/xqueue/defaults/main.yml" \
+ -e"@/edx/app/edx_ansible/edx_ansible/playbooks/distributed_vars.yml" \
+ -e"@/home/edx/my-passwords.yml" \
+ $extra_args'
 
 repos_to_cmd["edx-platform"]="$edx_ansible_cmd edxapp.yml -e 'edx_platform_version=$2'"
 repos_to_cmd["edx-workers"]="$edx_ansible_cmd edxapp.yml -e 'edx_platform_version=$2' -e 'celery_worker=true'"
