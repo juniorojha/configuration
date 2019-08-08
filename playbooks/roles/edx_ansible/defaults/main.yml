@@ -49,6 +49,7 @@ edx_ansible_requirements_files:
   - "{{ edx_ansible_code_dir }}/pre-requirements.txt"
   - "{{ edx_ansible_code_dir }}/requirements.txt"
 
-# edX configuration repo
-configuration_version: master
+# edX configuration repo - shouldn't this be ironwood.master? or fetched from environment?
+# Setting it to edx_platform_version variable as defined in roles/edxapp/defaults/main.yml
+configuration_version: "{{ edx_platform_version }}"
 edx_ansible_var_file: "{{ edx_ansible_app_dir }}/server-vars.yml"
