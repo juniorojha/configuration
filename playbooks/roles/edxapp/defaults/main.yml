@@ -8,9 +8,9 @@ primary_host_1: 10.129.103.140
 primary_host_2: 10.129.103.141
 primary_host_3: 10.129.103.142
 
-mysql_host: "{{ primary_host_2 }}"
+mysql_host: "{{ primary_host_3 }}"
 elasticsearch_host: "{{ primary_host_3 }}"
-mongo_host: "{{ primary_host_2 }}"
+mongo_host: "{{ primary_host_3 }}"
 
 ecommerce_host: "{{ primary_host_1 }}"
 insights_host: "{{ primary_host_1 }}"
@@ -25,10 +25,12 @@ journals_host: "{{ primary_host_1 }}"
 veda_host: "{{ primary_host_1 }}"
 
 lms_host: "{{ primary_host_1 }}"
-cms_host: "{{ primary_host_1 }}"
+cms_host: "{{ primary_host_2 }}"
 
 edxapp_notes_host: "{{ primary_host_1 }}"
 rabbitmq_host: "{{ primary_host_3 }}"
+
+forum_host: "{{ cms_host }}"
 
 # These are variables that default to a localhost
 # setup and are meant to be overwritten for
@@ -173,7 +175,7 @@ EDXAPP_LOG_LEVEL: 'INFO'
 EDXAPP_MEMCACHE: [ '{{ mysql_host }}:11211' ]
 EDXAPP_CACHE_COURSE_STRUCTURE_MEMCACHE: "{{ EDXAPP_MEMCACHE }}"
 EDXAPP_CACHE_BACKEND: 'django.core.cache.backends.memcached.MemcachedCache'
-EDXAPP_COMMENTS_SERVICE_URL:  'http://{{ lms_host }}:18080'
+EDXAPP_COMMENTS_SERVICE_URL:  'http://{{ forum_host }}:18080'
 # EDXAPP_COMMENTS_SERVICE_KEY must match FORUM_API_KEY
 EDXAPP_COMMENTS_SERVICE_KEY:  'password'
 
@@ -378,8 +380,11 @@ EDXAPP_NGINX_SKIP_ENABLE_SITES: False
 # If the LMS and Studio run on the same machine / nginx, it makes sense to have
 # a default (usually the LMS).  If you run on separate machines, you'll want to mark
 # them both as defaults.
+# Adding 'cms' assuming the previous statement meant
+# '...mark them both as defaults on both machines' - ojha
 EDXAPP_NGINX_DEFAULT_SITES:
   - 'lms'
+  - 'cms'
 
 EDXAPP_LANG: 'en_US.UTF-8'
 EDXAPP_LANGUAGE_CODE : 'en'

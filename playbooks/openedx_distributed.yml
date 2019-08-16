@@ -23,27 +23,47 @@
     - role: aws
       when: COMMON_ENABLE_AWS_ROLE
 
-- name: Configure nginx
-  hosts: localhost
-  become: True
-  gather_facts: True
-  roles:
-    - role: nginx
-      nginx_sites:
-      - certs
-      - cms
-    #   - credentials
-      - lms
-      - forum
-      - xqueue
-    #   - analytics_api
-    #   - discovery
-    #   - ecommerce
-      nginx_default_sites:
-      - lms
+# Not needed
+# - name: Configure nginx - lms
+#   hosts: localhost
+#   become: True
+#   gather_facts: True
+#   roles:
+#     - role: nginx
+#       nginx_sites:
+#       - certs
+#       - lms
+#     #   - credentials
+#     #  - lms
+#     #  - forum
+#     #  - xqueue
+#     #   - analytics_api
+#     #   - discovery
+#     #   - ecommerce
+#       nginx_default_sites:
+#       - lms
+
+# - name: Configure nginx - cms
+#   hosts: vm1
+#   become: True
+#   gather_facts: True
+#   roles:
+#     - role: nginx
+#       nginx_sites:
+#       - certs
+#       - cms
+#     #   - credentials
+#     #  - lms
+#     #  - forum
+#     #  - xqueue
+#     #   - analytics_api
+#     #   - discovery
+#     #   - ecommerce
+#       nginx_default_sites:
+#       - cms
 
 - name: Configure edxlocal
-  hosts: vm1
+  hosts: vm2
   become: True
   gather_facts: True
   roles:
@@ -51,7 +71,7 @@
 #      when: EDXAPP_MYSQL_HOST == 'localhost'
 
 - name: Configure memcache
-  hosts: vm1
+  hosts: vm2
   become: True
   gather_facts: True
   roles:
@@ -59,7 +79,7 @@
 #      when: "'localhost' in ' '.join(EDXAPP_MEMCACHE)"
 
 - name: Configure mongodb
-  hosts: vm1
+  hosts: vm2
   become: True
   gather_facts: True
   roles:
@@ -75,7 +95,11 @@
       rabbitmq_ip: "{{ rabbitmq_host }}"
       when: SANDBOX_ENABLE_RABBITMQ
 
-- name: Configure edxapp with celery
+# Now we are separating this into two because we want to separate LMS and CMS
+# Basically edxapp is both LMS and CMS
+# Only the nginx configuration will change
+
+- name: Configure edxapp - LMS - with celery
   hosts: localhost
   become: True
   gather_facts: True
@@ -83,11 +107,50 @@
     - role: edxapp
       celery_worker: True
 
-- name: Configure edxapp
-  hosts: localhost
+- name: Configure edxapp - CMS - with celery
+  hosts: vm1
   become: True
   gather_facts: True
   roles:
+    - role: edxapp
+      celery_worker: True
+
+- name: Configure edxapp - LMS
+  hosts: localhost
+  become: True
+  gather_facts: True
+  vars:
+    service_variants_enabled:
+      - lms
+  roles:
+    - role: automated
+      AUTOMATED_USERS: "{{ EDXAPP_AUTOMATED_USERS | default({}) }}"  
+    - role: nginx
+      nginx_sites:
+      - lms
+      nginx_default_sites: "{{ EDXAPP_NGINX_DEFAULT_SITES }}"
+      nginx_extra_sites: "{{ NGINX_EDXAPP_EXTRA_SITES }}"
+      nginx_extra_configs: "{{ NGINX_EDXAPP_EXTRA_CONFIGS }}"
+      nginx_skip_enable_sites: "{{ EDXAPP_NGINX_SKIP_ENABLE_SITES }}"
+    - edxapp
+
+- name: Configure edxapp - CMS
+  hosts: vm1
+  become: True
+  gather_facts: True
+  vars:
+    service_variants_enabled:
+      - cms  
+  roles:
+    - role: automated
+      AUTOMATED_USERS: "{{ EDXAPP_AUTOMATED_USERS | default({}) }}"  
+    - role: nginx
+      nginx_sites:
+      - cms
+      nginx_default_sites: "{{ EDXAPP_NGINX_DEFAULT_SITES }}"
+      nginx_extra_sites: "{{ NGINX_EDXAPP_EXTRA_SITES }}"
+      nginx_extra_configs: "{{ NGINX_EDXAPP_EXTRA_CONFIGS }}"
+      nginx_skip_enable_sites: "{{ EDXAPP_NGINX_SKIP_ENABLE_SITES }}"
     - edxapp
 
 - name: Configure ecommerce
@@ -175,6 +238,9 @@
   become: True
   gather_facts: True
   roles:
+    - role: nginx
+      nginx_sites:
+      - forum
     - forum
 
 - name: Configure discovery
@@ -192,6 +258,9 @@
   become: True
   gather_facts: True
   roles:
+    - role: nginx
+      nginx_default_sites:
+        - journals  
     - role: journals
       when: JOURNALS_ENABLED
 
@@ -208,6 +277,11 @@
   become: True
   gather_facts: True
   roles:
+    - role: automated
+      AUTOMATED_USERS: "{{ XQUEUE_AUTOMATED_USERS | default({}) }}"
+    - role: nginx
+      nginx_sites:
+      - xqueue  
     - role: xqueue
       update_users: True
 
