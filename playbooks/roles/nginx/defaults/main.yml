@@ -126,6 +126,8 @@ CMS_HOSTNAME: '~^((stage|prod)-)?studio.*'
 
 nginx_template_dir: "edx/app/nginx/sites-available"
 
+# Check this once
+
 nginx_xserver_gunicorn_hosts:
   - 127.0.0.1
 nginx_xqueue_gunicorn_hosts:
