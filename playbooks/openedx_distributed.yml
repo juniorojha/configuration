@@ -212,7 +212,7 @@
     - demo
 
 - name: Configure OAuth
-  hosts: all
+  hosts: localhost
   become: True
   gather_facts: True
   roles:
@@ -230,7 +230,7 @@
   become: True
   gather_facts: True
   roles:
-    - role: elasticsearch
+    - elasticsearch
 #      when: "'localhost' in EDXAPP_ELASTIC_SEARCH_CONFIG|map(attribute='host')"
 
 - name: Configure forum
