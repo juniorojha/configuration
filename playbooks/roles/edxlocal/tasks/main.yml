@@ -18,15 +18,38 @@
   when: item != None and item != ''
   with_items: "{{ edxlocal_databases }}"
 
+# When privileges are GRANTED, it automatically creates the corresponding user@host entry in mysql.user table.
+# We need to create multiple users here with different hosts
 - name: create database users
   mysql_user:
     name: "{{ item.user }}"
     password: "{{ item.pass }}"
-    host: "{{ item.host }}"
+    host: "{{ primary_host_1 }}"
     priv: "{{ item.db }}.*:ALL"
     append_privs: yes
   when: item.db != None and item.db != ''
   with_items: "{{ edxlocal_database_users }}"
+
+- name: create database users - 2
+  mysql_user:
+    name: "{{ item.user }}"
+    password: "{{ item.pass }}"
+    host: "{{ primary_host_2 }}"
+    priv: "{{ item.db }}.*:ALL"
+    append_privs: yes
+  when: item.db != None and item.db != ''
+  with_items: "{{ edxlocal_database_users }}"
+
+# Original Task
+# - name: create database users
+#   mysql_user:
+#     name: "{{ item.user }}"
+#     password: "{{ item.pass }}"
+#     host: "{{ item.host }}"
+#     priv: "{{ item.db }}.*:ALL"
+#     append_privs: yes
+#   when: item.db != None and item.db != ''
+#   with_items: "{{ edxlocal_database_users }}"
 
 - name: setup the migration db user
   mysql_user:

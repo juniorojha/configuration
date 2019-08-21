@@ -17,6 +17,9 @@ edxlocal_databases:
   - "{{ JOURNALS_DEFAULT_DB_NAME | default(None) }}"
   - "{{ VEDA_WEB_FRONTEND_DEFAULT_DB_NAME | default(None) }}"
 
+# Update this when you update hosts
+edxlocal_hosts: [{{ primary_host_1 }}, {{ primary_host_2 }}]
+
 edxlocal_database_users:
   - {
       db: "{{ ECOMMERCE_DATABASE_NAME | default(None) }}",

@@ -4,8 +4,8 @@
 # Set this to true if the final environment will have SSL
 production_build: false
 
-primary_host_1: 10.129.103.140
-primary_host_2: 10.129.103.141
+primary_host_1: "ironwood2.cse.iitb.ac.in"
+primary_host_2: "studio.ironwood2.cse.iitb.ac.in"
 primary_host_3: 10.129.103.142
 
 mysql_host: "{{ primary_host_3 }}"
@@ -30,7 +30,7 @@ cms_host: "{{ primary_host_2 }}"
 edxapp_notes_host: "{{ primary_host_1 }}"
 rabbitmq_host: "{{ primary_host_3 }}"
 
-forum_host: "{{ cms_host }}"
+forum_host: "{{ primary_host_1 }}"
 
 # These are variables that default to a localhost
 # setup and are meant to be overwritten for
@@ -347,9 +347,9 @@ EDXAPP_FEATURES:
 # This needs to be set to localhost
 # if xqueue is run on the same server
 # as the lms (it's sent in the request)
-EDXAPP_SITE_NAME: '{{ lms_host }}'
+EDXAPP_SITE_NAME: "{{ lms_host }}"
 EDXAPP_LMS_SITE_NAME: "{{ EDXAPP_SITE_NAME }}"
-EDXAPP_CMS_SITE_NAME: '{{ cms_host }}'
+EDXAPP_CMS_SITE_NAME: "{{ cms_host }}"
 EDXAPP_MEDIA_URL:  "/media"
 EDXAPP_FEEDBACK_SUBMISSION_EMAIL: ""
 EDXAPP_LOGGING_ENV:  'sandbox'
