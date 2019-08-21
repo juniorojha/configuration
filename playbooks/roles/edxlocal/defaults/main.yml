@@ -18,7 +18,7 @@ edxlocal_databases:
   - "{{ VEDA_WEB_FRONTEND_DEFAULT_DB_NAME | default(None) }}"
 
 # Update this when you update hosts
-edxlocal_hosts: [{{ primary_host_1 }}, {{ primary_host_2 }}]
+# edxlocal_hosts: [{{ primary_host_1 }}, {{ primary_host_2 }}]
 
 edxlocal_database_users:
   - {
