@@ -3,4 +3,11 @@
 # {{ ansible_managed }}
 
 source {{ veda_encode_worker_home }}/{{ veda_encode_worker_service_name }}_env
-source {{ veda_encode_worker_home }}/{{ veda_encode_worker_service_name }}/worker.sh
+source {{ veda_encode_worker_home }}/{{ veda_encode_worker_service_name }}/worker.sh celery_deliver_queue
+
+# source xyz.sh runs that file
+# If you check worker.sh it expects two arguments, one of them is mandatory
+# the two arguments represent - $1 - a celery and 
+# $2 - something related to worker.$2.%h 
+# If you check instance_config.yaml, you will find many celery queues
+# Only one of those queues is defined and that is celery_deliver_queue
