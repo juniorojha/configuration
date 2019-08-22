@@ -11,6 +11,8 @@
 # Defaults for common variables for video_pipeline. This is the base role for all video pipeline roles.
 #
 
+ansible_ec2_public_ipv4: "8.8.4.4"
+
 video_pipeline_base_service_name: "video_pipeline_base"
 
 video_pipeline_base_val_base_url: "{{ VIDEO_PIPELINE_BASE_LMS_BASE_URL | default('http://127.0.0.1:8000') }}"
