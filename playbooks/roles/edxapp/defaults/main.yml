@@ -598,7 +598,7 @@ EDXAPP_MICROSITE_ROOT_DIR: "{{ edxapp_app_dir }}/edx-microsite"
 EDXAPP_MICROSITE_CONFIGURATION: {}
 # Instructor code that will not be run in the code sandbox
 EDXAPP_COURSES_WITH_UNSAFE_CODE: []
-EDXAPP_SESSION_COOKIE_DOMAIN: ""
+EDXAPP_SESSION_COOKIE_DOMAIN: "{{ EDXAPP_SITE_NAME }}"
 EDXAPP_SESSION_COOKIE_NAME: "sessionid"
 
 # Whether to run reindex_course on deploy
