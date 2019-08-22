@@ -1,0 +1,19 @@
+---
+- name: VEDA
+  hosts: vm1
+  become: True
+  gather_facts: True
+  vars_files:
+    - "roles/common_vars/defaults/main.yml"
+    - "roles/edxapp/defaults/main.yml"  
+  roles:
+    - aws
+    - veda_intake_worker
+    - veda_encode_worker
+    - veda_pipeline_worker
+    - veda_delivery_worker
+    - role: nginx
+      nginx_default_sites:
+        - veda_web_frontend
+    - veda_web_frontend
+    - video_pipeline_integration
