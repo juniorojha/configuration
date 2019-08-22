@@ -107,13 +107,13 @@
   register: sshd_config_line1
 
 # This is an unnecessary task
-#- name: Update sshd password authentication config
-#  lineinfile:
-#    dest: /etc/ssh/sshd_config
-#    state: present
-#    regexp: "^PasswordAuthentication .*"
-#    line: "PasswordAuthentication {{ COMMON_SSH_PASSWORD_AUTH }}"
-#  register: sshd_config_line2
+- name: Update sshd password authentication config
+ lineinfile:
+   dest: /etc/ssh/sshd_config
+   state: present
+   regexp: "^PasswordAuthentication .*"
+   line: "PasswordAuthentication {{ COMMON_SSH_PASSWORD_AUTH }}"
+ register: sshd_config_line2
 
 - name: Restart ssh
   service:
