@@ -8,6 +8,7 @@
     - "roles/edxapp/defaults/main.yml"  
   roles:
     - aws
+    - redis
     - veda_intake_worker
     - veda_encode_worker
     - veda_pipeline_worker
