@@ -14,5 +14,7 @@ export NEW_RELIC_APP_NAME="{{ '{{' }} {{ role_name|upper }}_NEWRELIC_APPNAME }}"
 export NEW_RELIC_LICENSE_KEY="{{ '{{' }} NEWRELIC_LICENSE_KEY }}"
 {{ '{%' }} endif -%}
 
+# Test comment - checking - ROLE_NAME.sh.j2 inside /ansible-role-django-ida/templates/templates/edx/app/ROLE_NAME/ROLE_NAME.sh.j2
+
 source {{ '{{' }} {{ role_name }}_home }}/{{ role_name }}_env
 {{ '{{' }} executable }} -c {{ '{{' }} {{ role_name }}_home }}/{{ role_name }}_gunicorn.py {{ '{{' }} {{ role_name|upper }}_GUNICORN_EXTRA }} {{ role_name }}.wsgi:application

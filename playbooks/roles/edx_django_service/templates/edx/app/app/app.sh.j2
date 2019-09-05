@@ -21,6 +21,8 @@ fi
 export NEW_RELIC_LICENSE_KEY="{{ NEWRELIC_LICENSE_KEY }}"
 {% endif -%}
 
+# Test comment - checking - app.sh.j2 inside /edx_django_service/templates/edx/app/app/app.sh.j2
+
 export EDX_REST_API_CLIENT_NAME="{{ COMMON_ENVIRONMENT }}-{{ COMMON_DEPLOYMENT }}-{{ edx_django_service_name }}"
 
 source {{ edx_django_service_home }}/{{ edx_django_service_name }}_env

@@ -23,6 +23,8 @@ dependencies:
     edx_django_service_gunicorn_port: '{{ VEDA_WEB_FRONTEND_GUNICORN_PORT }}'
 # Using our custom repository
     edx_django_service_git_path: 'juniorojha'
+# Adding this line to check if the final template has 'sync' instead of 'gevent' in worker_class
+    edx_django_service_gunicorn_worker_class: 'sync'
     edx_django_service_django_settings_module: '{{ VEDA_WEB_FRONTEND_DJANGO_SETTINGS_MODULE }}'
     edx_django_service_environment_extra: '{{ VEDA_WEB_FRONTEND_ENVIRONMENT }}'
     edx_django_service_wsgi_name: 'VEDA'
