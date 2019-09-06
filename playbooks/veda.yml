@@ -3,6 +3,8 @@
   hosts: vm1
   become: True
   gather_facts: True
+  vars:
+    migrate_db: 'yes'
   vars_files:
     - "roles/common_vars/defaults/main.yml"
     - "roles/edxapp/defaults/main.yml"  
