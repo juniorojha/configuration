@@ -210,7 +210,9 @@ video_pipeline_base_config_default:
   celery_http_ingest_queue: ingest_queue
   celery_threads: 1
 
+  # Extra variables
   redis_broker: 10.129.103.141
+  environment: production
 
 video_pipeline_base_config_extra: {}
 VIDEO_PIPELINE_BASE_CONFIG: '{{ video_pipeline_base_config_default | combine(video_pipeline_base_config_extra) }}'
