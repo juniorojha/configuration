@@ -28,7 +28,8 @@ veda_web_frontend_directories:
 veda_web_frontend_config_other: {}
 veda_web_frontend_config_extra: "{{ veda_web_frontend_config_other | combine(veda_web_frontend_directories) }}"
 
-VEDA_WEB_FRONTEND_LOAD_DATA: false
+# Trying to see if this creates users
+VEDA_WEB_FRONTEND_LOAD_DATA: true
 veda_web_frontend_post_migrate_commands:
   - command: 'python manage.py loaddata encodes'
     when: '{{ VEDA_WEB_FRONTEND_LOAD_DATA }}'
