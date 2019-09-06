@@ -29,4 +29,5 @@
     chdir: "{{ edxapp_code_dir }}"
   become_user: "{{ edxapp_user }}"
   with_items: "{{ EDXAPP_VIDEO_PIPELINE_INTEGRATION_CONFIG }}"
-  when: CREATE_SERVICE_WORKER_USERS and CREATE_EDXAPP_VIDEO_PIPELINE_INTEGRATION is defined
+  # Conditional does not seem necessary
+  # when: CREATE_SERVICE_WORKER_USERS and CREATE_EDXAPP_VIDEO_PIPELINE_INTEGRATION is defined
