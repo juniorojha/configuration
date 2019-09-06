@@ -5,6 +5,7 @@
   gather_facts: True
   vars:
     migrate_db: 'yes'
+    EDXAPP_LMS_NGINX_PORT: '80'
   vars_files:
     - "roles/common_vars/defaults/main.yml"
     - "roles/edxapp/defaults/main.yml"  
