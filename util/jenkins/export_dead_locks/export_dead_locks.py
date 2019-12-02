@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import print_function
 import boto3
 from botocore.exceptions import ClientError
 import sys
@@ -47,7 +49,7 @@ def rds_extractor(environment):
     try:
         regions_list = client_region.describe_regions()
     except ClientError as e:
-        print("Unable to connect to AWS with error :{}".format(e))
+        print(("Unable to connect to AWS with error :{}".format(e)))
         sys.exit(1)
     for region in regions_list["Regions"]:
         rds_client = RDSBotoWrapper(region_name=region["RegionName"])
@@ -66,7 +68,6 @@ def rds_extractor(environment):
 
 
 def rds_controller(rds_list, username, password, hostname, splunkusername, splunkpassword, port, indexname):
-    service = splunk_client.connect(host=hostname, port=port, username=splunkusername, password=splunkpassword)
     for item in rds_list:
         rds_host_endpoint = item["Endpoint"]
         rds_port = item["Port"]
@@ -85,18 +86,20 @@ def rds_controller(rds_list, username, password, hostname, splunkusername, splun
             matches = re.finditer(regex, row[2])
             for matchNum, match in enumerate(matches, start=1):
                 global_str = match.group()
-        myindex = service.indexes[indexname]
-
-        # Open a socket
-        mysocket = myindex.attach(host=rds_host_endpoint, source="INNODB STATUS", sourcetype="RDS")
         expr = re.compile(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}")
         global_str = re.sub(expr, '', global_str)
+        #to avoid empty dead locks
+        if len(global_str) > 0:
+            service = splunk_client.connect(host=hostname, port=port, username=splunkusername, password=splunkpassword)
+            myindex = service.indexes[indexname]
+            # Open a socket
+            mysocket = myindex.attach(host=rds_host_endpoint, source="INNODB STATUS", sourcetype="RDS")
 
-        # Send events to it
-        mysocket.send(global_str)
+            # Send events to it
+            mysocket.send(str.encode(global_str))
 
-        # Close the socket
-        mysocket.close()
+            # Close the socket
+            mysocket.close()
 
 
 @click.command()
@@ -108,9 +111,11 @@ def rds_controller(rds_list, username, password, hostname, splunkusername, splun
 @click.option('--splunkpassword', envvar='SPLUNKPASSWORD', required=True)
 @click.option('--port', required=True, help='Use to identify the splunk port')
 @click.option('--indexname', required=True, help='Use to identify the splunk index name')
-def main(username, password, environment, hostname, splunkusername, splunkpassword, port, indexname):
+@click.option('--rdsignore', '-i', multiple=True, help='RDS name tags to not check, can be specified multiple times')
+def main(username, password, environment, hostname, splunkusername, splunkpassword, port, indexname, rdsignore):
     rds_list = rds_extractor(environment)
-    rds_controller(rds_list, username, password, hostname, splunkusername, splunkpassword, port, indexname)
+    filtered_rds_list = list([x for x in rds_list if x['name'] not in rdsignore])
+    rds_controller(filtered_rds_list, username, password, hostname, splunkusername, splunkpassword, port, indexname)
 
 
 if __name__ == '__main__':

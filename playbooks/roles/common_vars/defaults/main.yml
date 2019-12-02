@@ -66,6 +66,7 @@ COMMON_GIT_PATH: 'edx'  # git path prefix
 
 # override this var to set a different hostname
 COMMON_HOSTNAME: ""
+COMMON_DEPLOY_HOSTNAME: ""
 
 # Set to true to customize DNS search domains
 COMMON_CUSTOM_DHCLIENT_CONFIG: false
@@ -82,6 +83,8 @@ COMMON_SECURITY_UPDATES: no
 
 COMMON_MYSQL_READ_ONLY_USER: 'read_only'
 COMMON_MYSQL_READ_ONLY_PASS: 'password'
+COMMON_ANALYTICS_MYSQL_READ_ONLY_USER: 'read_only'
+COMMON_ANALYTICS_MYSQL_READ_ONLY_PASS: 'password'
 COMMON_MYSQL_ADMIN_USER: 'admin'
 COMMON_MYSQL_ADMIN_PASS: 'password'
 COMMON_MYSQL_MIGRATE_USER: 'migrate'
@@ -100,7 +103,7 @@ COMMON_ENABLE_NEWRELIC_APP: False
 COMMON_ENABLE_MINOS: False
 COMMON_TAG_EC2_INSTANCE: False
 common_boto_version: '2.48.0'
-common_node_version: '8.9.3'
+common_node_version: '12.13.0'
 common_redhat_pkgs:
   - ntp
   - lynx
@@ -109,6 +112,7 @@ common_redhat_pkgs:
   - git
   - unzip
   - acl
+  - resolvconf
 common_debian_pkgs:
   - apt-transport-https
   - ntp
@@ -121,6 +125,7 @@ common_debian_pkgs:
   - unzip
   - python-pip
   - python2.7-dev
+  - resolvconf
 
 # Packages that should be installed from our custom PPA, i.e. COMMON_EDX_PPA
 old_python_debian_pkgs:
@@ -134,6 +139,7 @@ common_pip_pkgs:
   - setuptools==39.0.1
   - virtualenv==15.2.0
   - virtualenvwrapper==4.8.2
+  - boto3
 
 common_web_user: www-data
 common_web_group: www-data
@@ -236,7 +242,7 @@ COMMON_JWT_ISSUER: '{{ COMMON_OIDC_ISSUER }}'
 # The following should be the string representation of a JSON Web Key Set (JWK set)
 # containing active public keys for signing JWTs.
 # See https://github.com/edx/edx-platform/blob/master/openedx/core/djangoapps/oauth_dispatch/docs/decisions/0008-use-asymmetric-jwts.rst
-COMMON_JWT_PUBLIC_SIGNING_JWK_SET: !!null
+COMMON_JWT_PUBLIC_SIGNING_JWK_SET: ''
 
 COMMON_JWT_AUTH_COOKIE_HEADER_PAYLOAD: 'edx-jwt-cookie-header-payload'
 COMMON_JWT_AUTH_COOKIE_SIGNATURE: 'edx-jwt-cookie-signature'
@@ -253,3 +259,15 @@ COMMON_ENABLE_AWS_ROLE: true
 
 # Remote config
 COMMON_HERMES_ENABLED: false
+
+COMMON_DECRYPT_CONFIG_ENABLED: false
+COMMON_COPY_CONFIG_ENABLED: false
+
+# Disable logging of config rendering which has secrets
+COMMON_CONFIG_NO_LOGGING: True
+
+# Default sandbox build flag to false
+COMMON_SANDBOX_BUILD: False
+
+# Variable to control setting up the retirement services
+COMMON_RETIREMENT_SERVICE_SETUP: false

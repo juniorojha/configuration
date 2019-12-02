@@ -107,6 +107,20 @@
     - install
     - install:base
 
+- name: install private key
+  copy:
+    content: "{{ item.value }}"
+    dest: "{{ hermes_app_dir }}/{{ hermes_service_name }}-{{ item.key }}"
+    force: yes
+    owner: "{{ hermes_user }}"
+    mode: "0600"
+  no_log: True
+  with_dict: "{{ HERMES_PRIVATE_KEYS_DICT }}"
+  when: HERMES_PRIVATE_KEYS_DICT is defined
+  tags:
+    - install
+    - install:base
+
 - name: Add sudoers entry
   template:
     src: "templates/sudoers.j2"
@@ -160,6 +174,15 @@
   tags:
     - install
     - install:base
+
+- name: Write the pre_hermes python script
+  copy:
+    src: pre_hermes_checks.sh
+    dest: "{{ hermes_app_dir }}/pre_hermes_checks.sh"
+    owner: "{{ hermes_user }}"
+    group: "{{ hermes_user }}"
+    mode: "0750"
+  when: HERMES_ENABLE_PRE_CHECK_SCRIPT
 
 - name: reload systemd configuration
   command: systemctl daemon-reload

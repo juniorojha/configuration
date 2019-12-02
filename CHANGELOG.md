@@ -1,4 +1,133 @@
+- Role: ecommerce
+  - Fixed paypal payment processor default configuration
+
+- Role: edxapp
+  - Added `ENABLE_PUBLISHER` for indicating that the publisher frontend service is in use
+
+- Role: discovery
+  - Added `ENABLE_PUBLISHER` for indicating that the publisher frontend service is in use
+
+- Role: edxapp
+  - Added `ENABLE_ENROLLMENT_RESET` feature flag for masters integration sandboxes
+
+- Role: conductor
+  - New role added to configure the conductor service
+
+- Role: jwt_signature
+  - Added role to inject JWT signing keys into application config, used from edxapp, worker, and registrar.
+
+- Playbook: masters_sandbox_update
+  - Create edx partner
+
+- Playbook: program_manager
+  - Added playbook to setup program-manager micro-frontend application on sandboxes
+
+- Role: program_manager
+  - Created the program-manager role for micro-frontend application to be setup
+
+- Role: registrar
+  - Set CSRF_TRUSTED_ORIGINS.
+
+- Role: registrar
+  - Set CORS_ORIGIN_WHITELIST.
+
+- Role: discovery
+  - Override DISCOVERY_MYSQL_REPLICA_HOST to `edx.devstack.mysql` in docker.
+
+- Playbook: masters_sandbox
+  - Include call to create_api_access_request
+
+- Role: discovery
+  - Add mysql replica settings to env config.
+
+- Role: common_vars
+  - Default `COMMON_JWT_PUBLIC_SIGNING_JWK_SET` to `''`
+    instead of `!!null`. Because of how this setting is handled,
+    `!!null` ends up rendering as the literal string `None` instead
+    of the value `null`, which causes JSON decoding to fail
+    wherever the default value is used (as `'None'` is not valid JSON).
+    By setting the default to a Falsy value like the
+    empty string, edx-drf-extensions does not attempt to JSON-
+    decode it.
+
+- Playbook: masters_sandbox
+  - Added playbook to setup user and api access
+
+- Role: registrar
+  - Changed `REGISTRAR_CELERY_ALWAYS_EAGER` default to `false`.
+
+- Role: registrar
+  - Added `REGISTRAR_CELERY_ALWAYS_EAGER` with default `True`.
+  - Injected above settings as environment variable for Registrar.
+
+- Role: xserver
+  - Remove xserver from sandbox builds.
+
+- Role: oauth_client_setup
+  - Ensure that created DOT applications have corresponding ApplicationAccess records with user_id scope.
+
+- Role: edx_notes_api
+  - Added `EDX_NOTES_API_HOSTNAME` to set a hostname for the edx-notes-api IDA.
+
+- Open edX
+  - Added `SANDBOX_ENABLE_NOTES` to enable/disable setting up the edx-notes-api IDA.
+
+- Role: registrar
+  - Add registrar to sandbox builds.
+
+- Role: registrar
+  - Change default celery queue to `registrar.default`, explicitly set default exchange and routing key.
+
 - Role: designer
+  - Create role
+
+- Role: supervisor
+  - Add registrar to `pre_supervisor_checks.py`
+
+- Role: registrar
+  - Added `registrar-workers.conf.j2`
+  - Add task to generate `registrar-workers.conf` from `registrar-workers.conf.j2`
+  - Added `REGISTRAR_WORKERS_ENABLE_NEWRELIC_DISTRIBUTED_TRACING`
+  - Added `REGISTRAR_WORKER_DEFAULT_STOPWAITSECS`
+  - Added `REGISTRAR_CELERY_HEARTBEAT_ENABLED`
+  - Added `REGISTRAR_NEWRELIC_WORKERS_APPNAME`
+  - Added `REGISTRAR_CELERY_WORKERS`
+
+- Role: registrar
+  - Added `REGISTRAR_CELERY_BROKER_TRANSPORT`.
+  - Added `REGISTRAR_CELERY_BROKER_USER`.
+  - Added `REGISTRAR_CELERY_BROKER_PASSWORD`.
+  - Added `REGISTRAR_CELERY_BROKER_HOSTNAME`.
+  - Added `REGISTRAR_CELERY_BROKER_VHOST`.
+  - Injected all above settings as environment variables for Registrar.
+
+- Role: registrar
+  - Added `REGISTRAR_API_ROOT`
+  - Modified `REGISTRAR_MEDIA_URL`.
+
+- Role: edx_django_service
+  - Added new overridable variable `edx_django_service_api_root`
+
+- Role: registrar
+  - Replaced `REGISTRAR_MEDIA_ROOT`.
+  - Added `REGISTRAR_MEDIA_STORAGE_BACKEND`.
+
+- Role: registrar
+  - Replaced `REGISTRAR_LMS_URL_ROOT` with `REGISTRAR_LMS_BASE_URL`.
+  - Replaced `REGISTRAR_DISCOVERY_API_URL` with `REGISTRAR_DISCOVERY_BASE_URL`.
+
+- Role: registrar
+  - Added `REGISTRAR_SEGMENT_KEY` for segment.io event tracking.
+
+- Role: registrar
+  - Added `REGISTRAR_SOCIAL_AUTH_EDX_OAUTH2_KEY` for oauth2.
+  - Added `REGISTRAR_SOCIAL_AUTH_EDX_OAUTH2_SECRET` for oauth2.
+  - Added `REGISTRAR_BACKEND_SERVICE_EDX_OAUTH2_KEY` for backend auth.
+  - Added `REGISTRAR_BACKEND_SERVICE_EDX_OAUTH2_SECRET` for backend auth.
+  - Added `REGISTRAR_SERVICE_USER_EMAIL` to have a registrar service user on LMS
+  - Added `REGISTRAR_SERVICE_USER_NAME` to have a registrar service user on LMS
+
+- Role: registrar
   - Create role
 
 - Role: edxapp
@@ -98,6 +227,10 @@
 
 - Role: edxapp
   - `EDXAPP_X_FRAME_OPTIONS` added in studio to prevent clickjacking.
+
+- Role: nginx
+  - Added `NGINX_EDXAPP_DEFAULT_SITE_THEME` to allow to completely
+  override `favicon.ico` file when Comprehensive Theme is enabled.
 
 - Role: edxapp
   - Added `EDXAPP_X_FRAME_OPTIONS` to prevent click jacking in LMS.
@@ -720,39 +853,3 @@
   - Added `WHITELABEL_DNS` for DNS settings of themes.
   - Added `WHITELABEL_ORG` for whitelabel organization settings.
 
-- Role: registrar
-  - Create role
-
-- Role: registrar
-  - Added `REGISTRAR_SOCIAL_AUTH_EDX_OAUTH2_KEY` for oauth2.
-  - Added `REGISTRAR_SOCIAL_AUTH_EDX_OAUTH2_SECRET` for oauth2.
-  - Added `REGISTRAR_BACKEND_SERVICE_EDX_OAUTH2_KEY` for backend auth.
-  - Added `REGISTRAR_BACKEND_SERVICE_EDX_OAUTH2_SECRET` for backend auth.
-  - Added `REGISTRAR_SERVICE_USER_EMAIL` to have a registrar service user on LMS
-  - Added `REGISTRAR_SERVICE_USER_NAME` to have a registrar service user on LMS
-
-- Role: registrar
-  - Added `REGISTRAR_SEGMENT_KEY` for segment.io event tracking.
-
-- Role: registrar
-  - Replaced `REGISTRAR_LMS_URL_ROOT` with `REGISTRAR_LMS_BASE_URL`.
-  - Replaced `REGISTRAR_DISCOVERY_API_URL` with `REGISTRAR_DISCOVERY_BASE_URL`.
-
-- Role: registrar
-  - Replaced `REGISTRAR_MEDIA_ROOT`.
-  - Added `REGISTRAR_MEDIA_STORAGE_BACKEND`.
-
-- Role: edx_django_service
-  - Added new overridable variable `edx_django_service_api_root`
-
-- Role: registrar
-  - Added `REGISTRAR_API_ROOT`
-  - Modified `REGISTRAR_MEDIA_URL`.
-
-- Role: registrar
-  - Added `REGISTRAR_CELERY_BROKER_TRANSPORT`.
-  - Added `REGISTRAR_CELERY_BROKER_USER`.
-  - Added `REGISTRAR_CELERY_BROKER_PASSWORD`.
-  - Added `REGISTRAR_CELERY_BROKER_HOSTNAME`.
-  - Added `REGISTRAR_CELERY_BROKER_VHOST`.
-  - Injected all above settings as environment variables for Registrar.

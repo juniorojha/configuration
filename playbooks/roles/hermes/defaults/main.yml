@@ -9,7 +9,7 @@
 #
 ##
 # Defaults for role hermes
-# 
+#
 
 #
 # vars are namespaced with the module name.
@@ -27,6 +27,7 @@ hermes_venv_dir: "{{ hermes_app_dir }}/venvs/{{ hermes_service_name }}"
 hermes_venv_bin: "{{ hermes_venv_dir }}/bin"
 hermes_interval: 60
 hermes_manifest_yaml_file_path: "{{ COMMON_CFG_DIR }}/{{ hermes_service_name }}.yml"
+hermes_private_key_file_path: "{{ hermes_app_dir }}/{{ hermes_service_name }}-private-key"
 hermes_environment:
   PATH: "{{ hermes_venv_dir }}/bin:{{ ansible_env.PATH }}"
 #
@@ -40,6 +41,9 @@ hermes_redhat_pkgs: []
 # the name of the yaml file on disk that the application is looking for without the suffix.
 # this is usually the play used to configure the service, but not always.
 hermes_target_service: "Not configured"
+
+# Enable pre_hermes_checks.sh in systemd service file
+HERMES_ENABLE_PRE_CHECK_SCRIPT: False
 
 # Where to download config file from, start with s3:// or https://
 HERMES_REMOTE_FILE_LOCATION: "Not configured"
@@ -59,10 +63,11 @@ HERMES_RELOAD_COMMAND: /edx/bin/supervisorctl signal HUP all
 # Hermes typically reloads one config file and reloads all the services on that box, typically 1 service for us
 # if you need to do something more complex like reloading multiple services, running additional commands etc
 # you could overwrite hermes_service_config directly and ignore these defaults
-hermes_service_config: 
+hermes_service_config:
   - url: '{{ HERMES_REMOTE_FILE_PATH }}'
     filename: '{{ HERMES_LOCAL_FILE_PATH }}'
     command:  'sudo {{ HERMES_COPY_COMMAND }} && sudo {{ HERMES_RELOAD_COMMAND }}'
+    secret_key_files: "{{ HERMES_PRIVATE_KEYS_DICT | map('regex_replace','(.*)','/edx/app/hermes/hermes-\\1') | join(',') if HERMES_PRIVATE_KEYS_DICT is defined else None }}"
 
 # These are dropped into sudoers for the user that runs this program, care should be taken to ensure they are safe
 # to run. By default we assume the 1 service per box and restart supervisor model. If you did something custom with

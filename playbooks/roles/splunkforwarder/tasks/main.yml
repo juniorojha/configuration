@@ -24,9 +24,8 @@
 # Install Splunk Forwarder for common_debian_variants
 - name: Install splunkforwarder specific system packages
   apt:
-    name: "{{ item }}"
+    name: "{{ splunk_debian_pkgs }}"
     state: present
-  with_items: "{{ splunk_debian_pkgs }}"
   tags:
     - splunk
     - install
@@ -38,7 +37,7 @@
     dest: "/tmp/{{ SPLUNKFORWARDER_DEB }}"
     url: "{{ SPLUNKFORWARDER_PACKAGE_URL }}"
   register: download_deb
-  until: download_deb|succeeded
+  until: download_deb is succeeded
   retries: 5
   when: ansible_distribution in common_debian_variants
 
@@ -52,7 +51,7 @@
     dest: "/tmp/{{ SPLUNKFORWARDER_RPM }}"
     url: "{{ SPLUNKFORWARDER_PACKAGE_URL }}"
   register: download_rpm
-  until: download_rpm|succeeded
+  until: download_rpm is succeeded
   retries: 5
   when: ansible_distribution in common_redhat_variants
 
@@ -94,7 +93,7 @@
   when: (download_rpm.changed or download_deb.changed) and create_boot_script.changed
   notify: restart splunkforwarder
 
-- name: Ensure splunk forder permissions
+- name: Ensure splunk forwader permissions
   file:
     path: "{{ splunkforwarder_output_dir }}"
     state: directory
